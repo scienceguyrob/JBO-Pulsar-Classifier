@@ -47,27 +47,27 @@ public class Constants
      * Command line flag For the desired accuracy of the network being trained.
      */
     public static final String DESIRED_ACCURACY_FLAG = "-acc=";
-    
+
     /**
      * Command line flag For the country choice.
      */
     public static final String COUNTRY_FLAG = "-country=";
-    
+
     /**
      * Command line flag For the desired classifier to use (if more are added).
      */
     public static final String CLASSIFIER_FLAG = "-classifier=";
-    
+
     /**
      * Command line flag For the language choice.
      */
     public static final String LANGUAGE_FLAG = "-lang=";
-    
+
     /**
      * Command line flag For the verbose logging.
      */
     public static final String LOGGING_FLAG = "-logging";
-    
+
     /**
      * Command line flag For the neural network to load.
      */
@@ -77,7 +77,7 @@ public class Constants
      * Command line flag For the path to save a neural network at.
      */
     public static final String SAVE_NN_FLAG = "-save=";
-    
+
     /**
      * Command line flag used to pass in the path to the training set.
      */
@@ -102,21 +102,21 @@ public class Constants
      * Command line flag used to pass in the size of the map.
      */
     public static final String MAPSIZE_FLAG = "-w=";
-    
+
     /**
      * Command line flag used to pass in the number of tests to run.
      */
     public static final String TESTS_FLAG = "-tests=";
-    
+
     /**
      * The command line flags.
      */
     public static final String[] FLAGS = 
 	{
-		DESIRED_ACCURACY_FLAG,COUNTRY_FLAG,CLASSIFIER_FLAG,
-		LANGUAGE_FLAG,LOGGING_FLAG,LOAD_NN_FLAG,SAVE_NN_FLAG,
-		TRAINING_SET_FLAG,VALIDATION_SET_FLAG,CLASSIFICATION_SET_FLAG,
-		OUTPUT_FILE_FLAG,MAPSIZE_FLAG,TESTS_FLAG
+	DESIRED_ACCURACY_FLAG,COUNTRY_FLAG,CLASSIFIER_FLAG,
+	LANGUAGE_FLAG,LOGGING_FLAG,LOAD_NN_FLAG,SAVE_NN_FLAG,
+	TRAINING_SET_FLAG,VALIDATION_SET_FLAG,CLASSIFICATION_SET_FLAG,
+	OUTPUT_FILE_FLAG,MAPSIZE_FLAG,TESTS_FLAG
 	};
 
     //*****************************************
@@ -124,7 +124,7 @@ public class Constants
     //         Command Line Actions
     //*****************************************
     //*****************************************
-    
+
     public static final String AUTOMATED_TRAINING = "AUTOMATED TRAINING";
     public static final String SEMI_AUTOMATED_TRAINING = "SEMI AUTOMATED TRAINING";
     public static final String AUTOMATED_CLASSIFICATION = "AUTOMATED CLASSIFICATION";
@@ -143,6 +143,16 @@ public class Constants
 
     public static final char[] ILLEGAL_FILENAME_CHARACTERS = {'^', '`', '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '<', '>', '|', '\"', ':','\\',File.separatorChar };
     public static final char[] ILLEGAL_PATH_CHARACTERS =     {'^', '`', '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '<', '>', '|', '\"', ':','\\' };
+
+    //*****************************************
+    //*****************************************
+    //         Classification classes
+    //*****************************************
+    //*****************************************
+    
+    public static final String PULSAR = "Pulsar";
+    public static final String RFI = "RFI";
+    
 
     //*****************************************
     //*****************************************

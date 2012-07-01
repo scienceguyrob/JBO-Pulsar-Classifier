@@ -25,6 +25,11 @@
  */
 package uk.ac.man.jb.pct.mvc.controllers;
 
+import uk.ac.man.jb.pct.classifiers.som.SOMClassifier;
+import uk.ac.man.jb.pct.classifiers.som.SelfOrganizingMap;
+import uk.ac.man.jb.pct.data.I_ClassifierStatistics;
+import uk.ac.man.jb.pct.data.I_DataSet;
+import uk.ac.man.jb.pct.data.PatternFileProcessor;
 import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
 import uk.ac.man.jb.pct.util.Common;
 
@@ -65,6 +70,8 @@ public class AutoTrainerController implements I_Controller
     //               Getters
     //*****************************************
     //*****************************************
+    
+    // None
 
     //*****************************************
     //*****************************************
@@ -89,12 +96,105 @@ public class AutoTrainerController implements I_Controller
 	{
 	    if(this.validateParameters())
 	    {
+		// We Now know the parameters are valid, so we can proceed
+		// to automatically train the network.
+
+		// Get Training & Validation Data
+		I_DataSet t_data = new PatternFileProcessor().process(this.input.getPathToTrainingFile());
+		I_DataSet v_data = new PatternFileProcessor().process(this.input.getPathToValidationFile());
+
+
+		System.out.println("Training Data Rows:"+t_data.getRows());
+		System.out.println("Training Data Cols:"+t_data.getColumns());
+
+		System.out.println("Validation Data Rows:"+v_data.getRows());
+		System.out.println("Validation Data Cols:"+v_data.getColumns());
+
+		// Major error if we return at this stage.
+		if(t_data == null | v_data == null)
+		    return;
+
+		boolean accuracyAttained = false;
+
+		int count = 0;
 		
+		while(!accuracyAttained && count < 100)
+		{
+		    // Build Map
+		    SelfOrganizingMap map = new SelfOrganizingMap(t_data.getDataAsArrayList());
+		    
+		    // How many data attributes
+		    map.setAttributes(t_data.getColumns());
+		    
+		    // What map width to use?
+		    if(this.input.getMapSize() > 1 && this.input.getMapSize() < 25)
+			map.setMapWidth(this.input.getMapSize());
+		    else
+			map.setMapWidth(10); // Default
+
+		    // Normalise Inputs
+		    map.NormalisePatterns();
+
+		    // Build map
+		    map.Build();
+
+		    // Train map
+		    map.Train(map.maximumErrorRate);
+
+		    // Find Clusters of positive pulsar instances
+		    SOMClassifier classifier = new SOMClassifier(map);
+
+		    if(!classifier.locateClusters(t_data))
+		    {
+			System.out.println("No clusters found");
+			break;
+		    }
+
+		    // Validate against validation training set
+		    int classifierChoice = input.getClassifier();
+		    System.out.println("Using classifier: "+classifierChoice);
+		    
+		    if(classifierChoice < 0)
+			classifier.validate(v_data, 0);
+		    else
+			classifier.validate(v_data, classifierChoice);
+
+		    // Get Statistics
+		    I_ClassifierStatistics stats = classifier.getStatistics();
+
+		    // If accuracy sufficient, save map.
+		    
+		    int accuracy = (int)Math.round( stats.getAccuracy() * 100 );
+		    int desiredAccuracy = (int)input.getDesiredNetworkAccuracy();
+		    int precision = (int)Math.round( stats.getPrecision() * 100 );
+		    
+		    if(accuracy >= desiredAccuracy && precision > 50)
+		    {
+			accuracyAttained = true;
+			System.out.println("Accuracy attained: "+accuracy);
+			System.out.println("Rounded accuracy: " + desiredAccuracy);
+			
+			// Save 
+			Common.fileDelete(input.getNetworkSavePath());
+			
+			if(SOMClassifier.write(classifier,input.getNetworkSavePath()))
+			    System.out.println("Self Organizing Map state persisted.");
+			else
+			    System.out.println("Self Organizing Map state could not be persisted!");
+		    }
+		    else
+		    {
+			System.out.println("Current Accuracy: "+accuracy);
+		    }
+		    
+		    count++;
+		}
+
 	    }
 	}
 	else
 	    System.out.println("Error: Command Line input parameters are null");
-	    
+
     }
 
     /**
@@ -133,13 +233,13 @@ public class AutoTrainerController implements I_Controller
 	    System.out.println("Error: Desired Network Accuracy invalid");
 	    return false;
 	}
-	
+
 	if(!Common.isPathValid(this.input.getNetworkSavePath()))
 	{
 	    System.out.println("Error: The path to save the trained netork to is invalid");
 	    return false;
 	}
-	
+
 	return true;
     }
 }

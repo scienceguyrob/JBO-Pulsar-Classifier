@@ -25,6 +25,7 @@
  */
 package uk.ac.man.jb.pct.data;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -115,7 +116,7 @@ public class DataSet implements I_DataSet
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_DataSet#getRows()
      */
-    public int getRows(){return rows; }
+    public int getRows(){rows = data.size(); return rows; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_DataSet#getColumns()
@@ -136,6 +137,19 @@ public class DataSet implements I_DataSet
 	rows = rows++;
     }
 
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.data.I_DataSet#getDataAsArrayList()
+     */
+    public ArrayList<double[]> getDataAsArrayList()
+    {
+	ArrayList< double[] > primitiveData = new ArrayList<double[]>();
+	
+	for(int i = 0; i < rows; i++)
+	    primitiveData.add(data.get(i).getData());
+	    
+	return primitiveData;
+    }
+    
     //*****************************************
     //*****************************************
     //               Setters

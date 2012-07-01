@@ -444,8 +444,6 @@ public class Common
 	    f = new File(path);
 	else
 	    return false;
-
-
 	try 
 	{
 	    @SuppressWarnings("unused")

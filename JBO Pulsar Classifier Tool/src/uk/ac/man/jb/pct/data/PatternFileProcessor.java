@@ -30,7 +30,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Vector;
 
+import uk.ac.man.jb.pct.mvc.Constants;
+import uk.ac.man.jb.pct.util.Common;
 import uk.ac.man.jb.pct.util.StringOps;
 
 /**
@@ -41,6 +44,23 @@ import uk.ac.man.jb.pct.util.StringOps;
  */
 public class PatternFileProcessor implements I_DataFileParser
 {
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.data.I_DataFileParser#process(java.lang.String)
+     */
+    public I_DataSet process(String path)
+    {
+	if(path.endsWith(".csv"))
+	    return this.processCSV(path);
+	else if(path.endsWith(".tab"))
+	    return this.processTAB(path);
+	else if(path.endsWith(".pat"))
+	    return this.processSNNS(path);
+	else if(path.endsWith(".xml"))
+	    return this.processXML(path);
+	else
+	    return null;	    
+    }
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_DataFileParser#processCSV()
      */
@@ -85,7 +105,7 @@ public class PatternFileProcessor implements I_DataFileParser
 	// and "0 1" for something we want to reject.
 	//
 	// Thanks to Dan Thornton for this explanation.
-	
+
 	// Variable to store the information.
 	DataSet dataSet = new DataSet(path.replace("\\", "_"),0);
 
@@ -118,7 +138,7 @@ public class PatternFileProcessor implements I_DataFileParser
 			{		
 			    //Declare input pattern to store data
 			    InputPattern pattern = new InputPattern();
-			    
+
 			    pattern.setName(line.substring(2, line.length()));
 
 			    line = in.readLine();
@@ -126,12 +146,12 @@ public class PatternFileProcessor implements I_DataFileParser
 			    double[] patternData = StringOps.splitStringToDouble(line," ");
 			    pattern.setData(patternData);
 
-			    String value = "RFI";
+			    String value = Constants.RFI;
 
 			    // 10 pulsar 01 not pulsar
 			    line = in.readLine();
 			    if(line.startsWith("1 0"))
-				value = "Pulsar";
+				value = Constants.PULSAR;
 
 			    pattern.setClassMembership(value);
 
@@ -161,5 +181,72 @@ public class PatternFileProcessor implements I_DataFileParser
     {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.data.I_DataFileParser#processLinkFile(java.lang.String)
+     */
+    @Override
+    public I_DataSet processLinkFile(String path)
+    {
+	// The input file is of the general form:
+	//
+	// < File path 1> 
+	// ...
+	// < File path n>
+	//
+	// The file paths lead to other files that contain the raw,
+	// space separated data.
+
+	// Variable to store the information.
+	Vector<String> paths = new Vector<String>();
+	
+	DataSet dataSet = new DataSet(path.replace("\\", "_"),0);
+
+	// Now read each line of the file one by one.
+
+	//Firstly try to create the file
+	File file = new File(path);
+
+	//if the file exists
+	if(file.exists())
+	{
+	    // Variables used to store the line of the being read
+	    // using the input stream, and an array list to store the input
+	    // patterns into.
+	    String line = "";
+
+	    // Read the file and display it line by line. 
+	    BufferedReader in = null;
+
+	    try
+	    {
+		//open stream to file
+		in = new BufferedReader(new FileReader(file));
+
+		try
+		{   
+		    while ((line = in.readLine()) != null)
+		    {
+			if(Common.fileExist(line) && !paths.contains(line))
+			    paths.add(line);
+		    }
+		}
+		catch(IOException e){return null;}
+		finally{in.close();}
+	    }
+	    catch (FileNotFoundException e) { return null; }
+	    catch (IOException e) { return null; }
+	}
+	else{ return null; }
+
+	if(paths.size() < 1)
+	    return null;
+	
+	for(int i = 0; i < paths.size(); i++)
+	// causes data set to validate itself.
+	if(dataSet.validated())
+	    return dataSet;
+	else return null;
     }
 }

@@ -25,11 +25,27 @@
  */
 package uk.ac.man.jb.pct.mvc.controllers;
 
+import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
+
 /**
  * I_Controller
  * @author Rob Lyon
  */
 public interface I_Controller
 {
-
+    /**
+     * Runs the controlling task.
+     */
+    public void run();
+    
+    /**
+     * @return true if the parameters passed to the controller are valid, else false.
+     */
+    public boolean validateParameters();
+    
+    /**
+     * Sets the parameters used by the controller.
+     * @param params the parameters.
+     */
+    public void setParameters(I_CommandLineInputData params);
 }

@@ -30,6 +30,8 @@ import javax.swing.UIManager;
 import uk.ac.man.jb.pct.io.DebugLogger;
 import uk.ac.man.jb.pct.io.Logging;
 import uk.ac.man.jb.pct.mvc.Constants;
+import uk.ac.man.jb.pct.mvc.controllers.AutoTrainerController;
+import uk.ac.man.jb.pct.mvc.controllers.I_Controller;
 import uk.ac.man.jb.pct.mvc.model.CommandLineInputData;
 import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
 
@@ -63,13 +65,26 @@ public class JBOPulsarClassificationTool
      */
     public static void main(String[] args)
     {	
+	String[] test_args = {"-t=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/training_set_mod.pat",
+			      "-v=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/validation_set.pat",
+			      "-classifier=1","-w=13","-acc=85","-save=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/network.xml"};
+	
 	// Process any command line arguments.
-	if (args != null)
+	/*if (args != null)
 	{		
 	    if (args.length > 0)
 	    {
 		for(int i =0; i<args.length;i++)
 		    input.processArgument(args[i]);
+	    }
+	}*/
+	
+	if (test_args != null)
+	{		
+	    if (test_args.length > 0)
+	    {
+		for(int i =0; i<test_args.length;i++)
+		    input.processArgument(test_args[i]);
 	    }
 	}
 
@@ -81,27 +96,29 @@ public class JBOPulsarClassificationTool
 	//log.enableLogging();
 	log.out("Starting");
 
-	System.out.print(input.toString());
+	System.out.println(input.toString());
 	
 	if(input.getActionPossibleFromInputs().equals(Constants.AUTOMATED_TRAINING))
 	{
-	    System.out.print("AUTOMATED_TRAINING");
+	    System.out.println("AUTOMATED_TRAINING");
+	    I_Controller c = new AutoTrainerController(input);
+	    c.run();
 	}
 	else if(input.getActionPossibleFromInputs().equals(Constants.SEMI_AUTOMATED_TRAINING))
 	{
-	    System.out.print("SEMI_AUTOMATED_TRAINING");
+	    System.out.println("SEMI_AUTOMATED_TRAINING");
 	}
 	else if(input.getActionPossibleFromInputs().equals(Constants.AUTOMATED_CLASSIFICATION))
 	{
-	    System.out.print("AUTOMATED_CLASSIFICATION");
+	    System.out.println("AUTOMATED_CLASSIFICATION");
 	}
 	else if(input.getActionPossibleFromInputs().equals(Constants.AUTOMATED_TESTING))
 	{
-	    System.out.print("AUTOMATED_TESTING");
+	    System.out.println("AUTOMATED_TESTING");
 	}
 	else // BUILD GUI
 	{
-	    System.out.print("GUI");
+	    System.out.println("GUI");
 	    
 	    EventQueue.invokeLater(new Runnable()
 	    {

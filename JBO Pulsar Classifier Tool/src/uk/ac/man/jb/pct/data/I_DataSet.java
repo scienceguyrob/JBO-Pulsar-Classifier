@@ -25,6 +25,8 @@
  */
 package uk.ac.man.jb.pct.data;
 
+import java.util.ArrayList;
+
 /**
  * I_DataSet
  * @author Rob Lyon
@@ -72,4 +74,10 @@ public interface I_DataSet
      * @return true if validated successfully, else false.
      */
     public boolean validated();
+    
+    /**
+     * @return the rows of data from this data set as an array list,
+     *         rather than as a set of objects.
+     */
+    public ArrayList<double[]> getDataAsArrayList();
 }

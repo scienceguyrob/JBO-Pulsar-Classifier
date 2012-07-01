@@ -32,6 +32,17 @@ package uk.ac.man.jb.pct.data;
 public interface I_DataFileParser
 {
     /**
+     * Process a file that contains links to other files,
+     * that contain the data to be loaded.
+     * @param path the path to the file to process.
+     * @return the input data as a DataSet object that
+     *         implements the {@link I_DataSet} interface, otherwise
+     *         null if there is an error or inconsistent data.
+     * @see I_DataSet
+     */
+    public I_DataSet processLinkFile(String path);
+    
+    /**
      * Process a comma separated value (CSV) file for input data.
      * @param path the path to the file to process.
      * @return the input data as a DataSet object that
@@ -70,4 +81,14 @@ public interface I_DataFileParser
      * @see I_DataSet
      */
     public I_DataSet processXML(String path);
+    
+    /**
+     * Process an file for input data.
+     * @param path the path to the file to process.
+     * @return the input data as a DataSet object that
+     *         implements the {@link I_DataSet} interface, otherwise
+     *         null if there is an error or inconsistent data.
+     * @see I_DataSet
+     */
+    public I_DataSet process(String path);
 }
