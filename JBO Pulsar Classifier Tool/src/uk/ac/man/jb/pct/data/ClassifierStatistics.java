@@ -26,7 +26,9 @@
 package uk.ac.man.jb.pct.data;
 
 /**
- * ClassifierStatistics
+ * ClassifierStatistics. This class is used to store
+ * the statistics gathered on a generated classifier.
+ * 
  * @author Rob Lyon
  */
 public class ClassifierStatistics implements I_ClassifierStatistics

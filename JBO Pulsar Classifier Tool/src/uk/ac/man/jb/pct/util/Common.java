@@ -52,7 +52,6 @@ import uk.ac.man.jb.pct.io.Logging;
  * This class contains a number of utility methods for the application.
  * 
  * @author Rob Lyon
- *
  */
 public class Common
 {
@@ -749,7 +748,91 @@ public class Common
 	else
 	    return null; // Directory is empty.
     }
+    
+    /**
+     * Gets an array of files from a specified directory.
+     * @param path the path to the directory in which to look for files.
+     * @return an array of paths if the directory is not empty, else null.
+     */
+    public static String[] getFilePaths(String path)
+    {
+	if(!isDirEmpty(path))
+	{
+	    File dir = new File(path);
+	    File[] files = dir.listFiles();
 
+	    // This filter only returns the files present
+	    FileFilter fileFilter = new FileFilter() {
+		public boolean accept(File file) {
+		    return file.isFile();
+		}
+	    };
+
+	    files = dir.listFiles(fileFilter);
+	    Arrays.sort(files);
+	    
+	    String[] paths = new String[files.length];
+	    
+	    for(int i = 0; i < files.length;i++)
+	    {
+		try 
+		{
+		    paths[i] = files[i].getCanonicalPath();
+		}
+		catch(IOException e){}
+	    }
+	    
+	    return paths;
+	}
+	else
+	    return null; // Directory is empty.
+    }
+
+    /**
+     * Gets an array of files from a specified directory.
+     * @param path the path to the directory in which to look for files.
+     * @param f the file filter.
+     * @return an array of paths if the directory is not empty, else null.
+     */
+    public static String[] getFilePaths(String path, String f)
+    {
+	if(!isDirEmpty(path))
+	{
+	    File dir = new File(path);
+	    File[] files = dir.listFiles();
+
+	    // This filter only returns the files present
+	    FileFilter fileFilter = new FileFilter() {
+		public boolean accept(File file) {
+		    return file.isFile();
+		}
+	    };
+
+	    files = dir.listFiles(fileFilter);
+	    Arrays.sort(files);
+	    
+	    Vector<String> paths = new Vector<String>();
+	    
+	    for(int i = 0; i < files.length;i++)
+	    {
+		try 
+		{
+		    String cpath = files[i].getCanonicalPath();
+		    
+		    if(cpath.endsWith(f))
+			paths.add(cpath);
+		}
+		catch(IOException e){}
+	    }
+	    
+	    String[] values = paths.toArray(new String[paths.size()]);
+	    
+	    return values;
+	}
+	else
+	    return null; // Directory is empty.
+    }
+    
     /**
      * Gets an array of directories from a specified directory.
      * @param path the path to the directory in which to look for sub directories.

@@ -30,8 +30,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
-
 import uk.ac.man.jb.pct.mvc.Constants;
 import uk.ac.man.jb.pct.util.Common;
 import uk.ac.man.jb.pct.util.StringOps;
@@ -39,8 +37,8 @@ import uk.ac.man.jb.pct.util.StringOps;
 /**
  * Class that processes a file containing input patterns, and returns the data
  * as DataSet instances.
+ * 
  * @author Rob Lyon
- *
  */
 public class PatternFileProcessor implements I_DataFileParser
 {
@@ -184,6 +182,58 @@ public class PatternFileProcessor implements I_DataFileParser
     }
 
     /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.data.I_DataFileParser#processPatternFile(java.lang.String)
+     */
+    @Override
+    public I_InputPattern processPatternFile(String path)
+    {
+	InputPattern pattern = null;
+	
+	//Firstly try to create the file
+	File file = new File(path);
+
+	//if the file exists
+	if(file.exists())
+	{
+	    // Variables used to store the line of the being read
+	    // using the input stream, and an array list to store the input
+	    // patterns into.
+	    String line = "";
+
+	    // Read the file and display it line by line. 
+	    BufferedReader in = null;
+
+	    try
+	    {
+		//open stream to file
+		in = new BufferedReader(new FileReader(file));
+
+		try
+		{   
+		    while ((line = in.readLine()) != null)
+		    {
+
+			//Declare input pattern to store data
+			pattern = new InputPattern();
+
+			pattern.setName(path);
+
+			double[] patternData = StringOps.splitStringToDouble(line," ");
+			pattern.setData(patternData);
+		    }
+		}
+		catch(IOException e){return null;}
+		finally{in.close();}
+	    }
+	    catch (FileNotFoundException e) { return null; }
+	    catch (IOException e) { return null; }
+	}
+	else{ return null; }
+	
+	return pattern;
+    }
+
+    /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_DataFileParser#processLinkFile(java.lang.String)
      */
     @Override
@@ -198,9 +248,6 @@ public class PatternFileProcessor implements I_DataFileParser
 	// The file paths lead to other files that contain the raw,
 	// space separated data.
 
-	// Variable to store the information.
-	Vector<String> paths = new Vector<String>();
-	
 	DataSet dataSet = new DataSet(path.replace("\\", "_"),0);
 
 	// Now read each line of the file one by one.
@@ -228,8 +275,8 @@ public class PatternFileProcessor implements I_DataFileParser
 		{   
 		    while ((line = in.readLine()) != null)
 		    {
-			if(Common.fileExist(line) && !paths.contains(line))
-			    paths.add(line);
+			if(Common.fileExist(line))
+			    dataSet.addRow(this.processPatternFile(line));
 		    }
 		}
 		catch(IOException e){return null;}
@@ -240,10 +287,6 @@ public class PatternFileProcessor implements I_DataFileParser
 	}
 	else{ return null; }
 
-	if(paths.size() < 1)
-	    return null;
-	
-	for(int i = 0; i < paths.size(); i++)
 	// causes data set to validate itself.
 	if(dataSet.validated())
 	    return dataSet;

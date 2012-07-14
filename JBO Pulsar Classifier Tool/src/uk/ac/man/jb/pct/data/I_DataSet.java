@@ -28,7 +28,9 @@ package uk.ac.man.jb.pct.data;
 import java.util.ArrayList;
 
 /**
- * I_DataSet
+ * I_DataSet and interface defining the methods
+ * used to manipulate a data set.
+ * 
  * @author Rob Lyon
  */
 public interface I_DataSet

@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
  * This class contains methods used to manipulate strings.
  * 
  * @author Rob Lyon
- *
  */
 public class StringOps
 {

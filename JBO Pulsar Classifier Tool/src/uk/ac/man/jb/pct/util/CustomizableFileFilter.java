@@ -31,7 +31,6 @@ import java.io.File;
  * This class is used to filter the files accepted in a file chooser dialog.
  * 
  * @author Rob Lyon
- *
  */
 public class CustomizableFileFilter extends javax.swing.filechooser.FileFilter
 {

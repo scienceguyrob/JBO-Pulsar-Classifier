@@ -63,6 +63,7 @@
 			<fileset dir="${src.dir}">
 				<exclude name="**/i18N/**" />
 				<exclude name="**/test/**" />
+				<exclude name="**/images/**" />
 				<include name="**" />
 			</fileset>
 		</javadoc>
@@ -72,7 +73,7 @@
 	<target name="jar" depends="compile">
 		<jar destfile="${dist.dir}\JBOPulsarSearchTool.jar" basedir="${build.dir}">
 			<manifest>
-				<attribute name="Main-Class" value="test.Main" />
+				<attribute name="Main-Class" value="JBOPulsarClassificationTool" />
 			</manifest>
 		</jar>
 	</target>

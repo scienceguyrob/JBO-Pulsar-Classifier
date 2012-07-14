@@ -26,7 +26,10 @@
 package uk.ac.man.jb.pct.data;
 
 /**
- * DataSetTransformer
+ * DataSetTransformer. This class provides methods that
+ * can transform classes that implement the I_DataSet interface
+ * in to other formats.
+ * 
  * @author Rob Lyon
  */
 public class DataSetTransformer implements I_DataSetTransformer

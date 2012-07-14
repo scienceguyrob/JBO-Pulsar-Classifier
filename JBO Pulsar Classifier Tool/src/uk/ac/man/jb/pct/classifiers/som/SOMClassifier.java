@@ -35,7 +35,9 @@ import uk.ac.man.jb.pct.mvc.Constants;
 import uk.ac.man.jb.pct.util.SerializableBaseObject;
 
 /**
- * SOMClassifier
+ * SOMClassifier. This class acts as a wrapper for the SelfOrganizingMap
+ * class, providing a classifier in the process.
+ * 
  * @author Rob Lyon
  */
 public class SOMClassifier extends SerializableBaseObject

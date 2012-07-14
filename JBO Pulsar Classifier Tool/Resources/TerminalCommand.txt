@@ -1,0 +1,4 @@
+java -jar JBOPulsarSearchTool.jar -settings=/Users/rob/git/JBO-Pulsar-Classifier/JBO\ Pulsar\ Classifier\ Tool/Resources/Settings_Test_1.txt
+
+Unix text command
+/Users/rob/git/JBO-Pulsar-Classifier/JBO\ Pulsar\ Classifier\ Tool/Resources/

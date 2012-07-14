@@ -34,65 +34,64 @@ import uk.ac.man.jb.pct.util.Common;
  * This class contains methods used for writing to files.
  * 
  * @author Rob Lyon
- *
  */
 public class Writer
 {
-	//*****************************************
-	//*****************************************
-	//              Write to file
-	//*****************************************
-	//*****************************************
+    //*****************************************
+    //*****************************************
+    //              Write to file
+    //*****************************************
+    //*****************************************
 
-	/**
-	 * Writes a string literal to a specified file. The literal is
-	 * appended to the end of the file in question.
-	 * @param path the path to the file to which the string literal will be appended.
-	 * @param text the string text to append to the file.
-	 * @return true if the write operation was successful, else false.
-	 */
-	public static boolean write(String path, String text)
+    /**
+     * Writes a string literal to a specified file. The literal is
+     * appended to the end of the file in question.
+     * @param path the path to the file to which the string literal will be appended.
+     * @param text the string text to append to the file.
+     * @return true if the write operation was successful, else false.
+     */
+    public static boolean write(String path, String text)
+    {
+	if(!Common.fileExist(path))//Check file exists
+	    Common.fileCreate(path);//if not delete it
+
+	if(Common.fileExist(path))//make sure the file we created exists
 	{
-		if(!Common.fileExist(path))//Check file exists
-			Common.fileCreate(path);//if not delete it
-
-		if(Common.fileExist(path))//make sure the file we created exists
-		{
-			try 
-			{
-				//BufferedWriter out = new BufferedWriter(new FileWriter(path));//Non-append
-				BufferedWriter out = new BufferedWriter(new FileWriter(path, true));//append
-				out.write(text);
-				out.close();
-				return true;
-			} 
-			catch (IOException e) {return false;}
-		}
-		else{ return false; }
+	    try 
+	    {
+		//BufferedWriter out = new BufferedWriter(new FileWriter(path));//Non-append
+		BufferedWriter out = new BufferedWriter(new FileWriter(path, true));//append
+		out.write(text);
+		out.close();
+		return true;
+	    } 
+	    catch (IOException e) {return false;}
 	}
+	else{ return false; }
+    }
 
-	//*****************************************
-	//*****************************************
-	//              Clear File
-	//*****************************************
-	//*****************************************
+    //*****************************************
+    //*****************************************
+    //              Clear File
+    //*****************************************
+    //*****************************************
 
-	/**
-	 * Clears a file of data.
-	 * @param path the path to the text file to clear.
-	 * @return true if the file was cleared successfully.
-	 */
-	public static boolean clear(String path)
-	{	
-		if (Common.fileExist(path))
-		{
-			boolean deleted = Common.fileDelete(path);
+    /**
+     * Clears a file of data.
+     * @param path the path to the text file to clear.
+     * @return true if the file was cleared successfully.
+     */
+    public static boolean clear(String path)
+    {	
+	if (Common.fileExist(path))
+	{
+	    boolean deleted = Common.fileDelete(path);
 
-			if(deleted)
-				return Common.fileCreate(path);
-			else 
-				return false;
-		}
-		else{ return false; }
+	    if(deleted)
+		return Common.fileCreate(path);
+	    else 
+		return false;
 	}
+	else{ return false; }
+    }
 }

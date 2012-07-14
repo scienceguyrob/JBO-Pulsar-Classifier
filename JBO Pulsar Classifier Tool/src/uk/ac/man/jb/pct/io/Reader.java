@@ -39,269 +39,268 @@ import uk.ac.man.jb.pct.util.Common;
  * This class is used to read files in different ways.
  * 
  * @author Rob Lyon
- *
  */
 public class Reader
 {
-	//*****************************************
-	//*****************************************
-	//                Methods
-	//*****************************************
-	//*****************************************
+    //*****************************************
+    //*****************************************
+    //                Methods
+    //*****************************************
+    //*****************************************
 
-	/**
-	 * Gets the full string contents of a file and returns them.
-	 * 
-	 * Returns null if there is an IOException, or if the file is empty.
-	 * 
-	 * @param path The file to extract the contents from.
-	 * @return The contents of the file as a string, or null if the file is empty.
-	 */
-	public static String getContents(String path)
+    /**
+     * Gets the full string contents of a file and returns them.
+     * 
+     * Returns null if there is an IOException, or if the file is empty.
+     * 
+     * @param path The file to extract the contents from.
+     * @return The contents of the file as a string, or null if the file is empty.
+     */
+    public static String getContents(String path)
+    {
+	//Firstly try to create the file
+	File file = new File(path);
+
+	//if the file exists
+	if(file.exists())
 	{
-		//Firstly try to create the file
-		File file = new File(path);
+	    String line = "";
+	    StringBuilder builder = new StringBuilder();
 
-		//if the file exists
-		if(file.exists())
-		{
-			String line = "";
-			StringBuilder builder = new StringBuilder();
+	    int counter = 0;
 
-			int counter = 0;
+	    // Read the file and display it line by line. 
+	    BufferedReader in = null;
 
-			// Read the file and display it line by line. 
-			BufferedReader in = null;
+	    try
+	    {
+		//open stream to file
+		in = new BufferedReader(new FileReader(file));
 
-			try
+		try
+		{   
+		    while ((line = in.readLine()) != null)
+		    {
+			if (counter != 0)//if we are not on the first line
 			{
-				//open stream to file
-				in = new BufferedReader(new FileReader(file));
-
-				try
-				{   
-					while ((line = in.readLine()) != null)
-					{
-						if (counter != 0)//if we are not on the first line
-						{
-							builder.append("\r"+line);
-						}
-						else//we are on the first line
-						{
-							//no need for new line character
-							builder.append(line);
-							counter++;
-						}
-					}
-				}
-				catch(IOException e){return null;}
-				finally{in.close();}
-
-				if(counter == 0){ return null; }
-				else{ return builder.toString();}
+			    builder.append("\r"+line);
 			}
-			catch (FileNotFoundException e) { return null; }
-			catch (IOException e) { return null; }
+			else//we are on the first line
+			{
+			    //no need for new line character
+			    builder.append(line);
+			    counter++;
+			}
+		    }
 		}
-		else{ return null; }
-	}
+		catch(IOException e){return null;}
+		finally{in.close();}
 
-	/**
-	 * Gets the full string contents of a file and returns them.
-	 * 
-	 * Returns null if there is an IOException, or if the file is empty.
-	 * 
-	 * @param f The file to extract the contents from.
-	 * @return The contents of the file as a string, or null if the file is empty.
-	 */
-	public static String getContents(File f)
+		if(counter == 0){ return null; }
+		else{ return builder.toString();}
+	    }
+	    catch (FileNotFoundException e) { return null; }
+	    catch (IOException e) { return null; }
+	}
+	else{ return null; }
+    }
+
+    /**
+     * Gets the full string contents of a file and returns them.
+     * 
+     * Returns null if there is an IOException, or if the file is empty.
+     * 
+     * @param f The file to extract the contents from.
+     * @return The contents of the file as a string, or null if the file is empty.
+     */
+    public static String getContents(File f)
+    {
+	//Firstly try to create the file
+	File file = f;
+
+	//if the file exists
+	if(file.exists())
 	{
-		//Firstly try to create the file
-		File file = f;
+	    String line = "";
+	    StringBuilder builder = new StringBuilder();
 
-		//if the file exists
-		if(file.exists())
-		{
-			String line = "";
-			StringBuilder builder = new StringBuilder();
+	    int counter = 0;
 
-			int counter = 0;
+	    // Read the file and display it line by line. 
+	    BufferedReader in = null;
 
-			// Read the file and display it line by line. 
-			BufferedReader in = null;
+	    try
+	    {
+		//open stream to file
+		in = new BufferedReader(new FileReader(file));
 
-			try
+		try
+		{   
+		    while ((line = in.readLine()) != null)
+		    {
+			if (counter != 0)//if we are not on the first line
 			{
-				//open stream to file
-				in = new BufferedReader(new FileReader(file));
-
-				try
-				{   
-					while ((line = in.readLine()) != null)
-					{
-						if (counter != 0)//if we are not on the first line
-						{
-							builder.append("\r"+line);
-						}
-						else//we are on the first line
-						{
-							//no need for new line character
-							builder.append(line);
-							counter++;
-						}
-					}
-				}
-				catch(IOException e){return null;}
-				finally{in.close();}
-
-				if(counter == 0){ return null; }
-				else{ return builder.toString();}
+			    builder.append("\r"+line);
 			}
-			catch (FileNotFoundException e) { return null; }
-			catch (IOException e) { return null; }
+			else//we are on the first line
+			{
+			    //no need for new line character
+			    builder.append(line);
+			    counter++;
+			}
+		    }
 		}
-		else{ return null; }
-	}
+		catch(IOException e){return null;}
+		finally{in.close();}
 
-	/**
-	 * Counts the number of lines in a text file.
-	 * 
-	 * Returns -1 if the file is empty, or if there are any errors encountered.
-	 * 
-	 * @param path The file to retrieve the line count for.
-	 * 
-	 * @return an integer representation of the line count, 0 if the file is empty.
-	 */
-	public static int getLineCount(String path)
+		if(counter == 0){ return null; }
+		else{ return builder.toString();}
+	    }
+	    catch (FileNotFoundException e) { return null; }
+	    catch (IOException e) { return null; }
+	}
+	else{ return null; }
+    }
+
+    /**
+     * Counts the number of lines in a text file.
+     * 
+     * Returns -1 if the file is empty, or if there are any errors encountered.
+     * 
+     * @param path The file to retrieve the line count for.
+     * 
+     * @return an integer representation of the line count, 0 if the file is empty.
+     */
+    public static int getLineCount(String path)
+    {
+	//Firstly try to create the file
+	File file = new File(path);
+
+	//if the file exists
+	if(file.exists())
 	{
-		//Firstly try to create the file
-		File file = new File(path);
+	    @SuppressWarnings("unused")
+	    String line = "";
+	    int counter = -1;
 
-		//if the file exists
-		if(file.exists())
+	    // Read the file and display it line by line. 
+	    BufferedReader in = null;
+
+	    try
+	    {
+		//open stream to file
+		in = new BufferedReader(new FileReader(file));
+
+		try
 		{
-			@SuppressWarnings("unused")
-			String line = "";
-			int counter = -1;
+		    // Prepare counter
+		    counter = 0;
 
-			// Read the file and display it line by line. 
-			BufferedReader in = null;
-
-			try
-			{
-				//open stream to file
-				in = new BufferedReader(new FileReader(file));
-
-				try
-				{
-					// Prepare counter
-					counter = 0;
-
-					while ((line = in.readLine()) != null){ counter++; }
-				}
-				catch(IOException e){return -1;}
-				finally{in.close();}
-
-				if(counter == 0){ return -1; }
-				else{ return counter; }
-			}
-			catch (FileNotFoundException e) { return -1; }
-			catch (IOException e) { return -1; }
+		    while ((line = in.readLine()) != null){ counter++; }
 		}
-		else
-		{
-			return -1;
-		}
+		catch(IOException e){return -1;}
+		finally{in.close();}
+
+		if(counter == 0){ return -1; }
+		else{ return counter; }
+	    }
+	    catch (FileNotFoundException e) { return -1; }
+	    catch (IOException e) { return -1; }
 	}
-
-	/**
-	 * Reads a specific line from a file.
-	 * 
-	 * Line numbering begins at 1.
-	 * 
-	 * Entering a line number less than or equal to zero will return an empty
-	 * string. If there aren't enough lines in the file, an empty string will be
-	 * returned.
-	 * 
-	 * If any errors are encountered, null will be returned.
-	 * 
-	 * @param path The file to read.
-	 * @param lineNumber The line number to read in the file.
-	 * @return The specified line from the file as a string.
-	 */
-	public static String readLine(String path, int lineNumber)
+	else
 	{
-		if(lineNumber > 0)
-		{
-			//Firstly try to create the file
-			File file = new File(path);
-
-			//if the file exists
-			if(file.exists())
-			{
-				String line = "";
-				String content = "";
-				int counter = 1;
-
-				// Read the file and display it line by line. 
-				BufferedReader in = null;
-
-				try
-				{
-					//open stream to file
-					in = new BufferedReader(new FileReader(file));
-
-					try
-					{
-						while ((line = in.readLine()) != null)
-						{
-
-							if(counter == lineNumber)
-							{
-								content = line;
-								break;
-							}   
-							counter++;
-						}
-					}
-					catch(IOException e){ return null; }
-					finally{ in.close(); }
-
-					return content;
-				}
-				catch (FileNotFoundException e){ return null; }
-				catch (IOException e){ return null; }
-			}
-			else{ return null; }
-		}
-		else{ return ""; }
+	    return -1;
 	}
+    }
 
-	/**
-	 * Tests to see if a file is empty.
-	 * @param path
-	 * @return true if file is empty, else false.
-	 */
-	public static boolean isEmpty(String path)
+    /**
+     * Reads a specific line from a file.
+     * 
+     * Line numbering begins at 1.
+     * 
+     * Entering a line number less than or equal to zero will return an empty
+     * string. If there aren't enough lines in the file, an empty string will be
+     * returned.
+     * 
+     * If any errors are encountered, null will be returned.
+     * 
+     * @param path The file to read.
+     * @param lineNumber The line number to read in the file.
+     * @return The specified line from the file as a string.
+     */
+    public static String readLine(String path, int lineNumber)
+    {
+	if(lineNumber > 0)
 	{
-		if(Common.isFile(path))
+	    //Firstly try to create the file
+	    File file = new File(path);
+
+	    //if the file exists
+	    if(file.exists())
+	    {
+		String line = "";
+		String content = "";
+		int counter = 1;
+
+		// Read the file and display it line by line. 
+		BufferedReader in = null;
+
+		try
 		{
-			try
+		    //open stream to file
+		    in = new BufferedReader(new FileReader(file));
+
+		    try
+		    {
+			while ((line = in.readLine()) != null)
 			{
-				FileInputStream stream = new FileInputStream(new File(path));  
-				int b = stream.read(); 
 
-				if (b == -1)  
-				{  
-					stream.close();
-					return true;
-				}
-
-				stream.close();
-				return false;
+			    if(counter == lineNumber)
+			    {
+				content = line;
+				break;
+			    }   
+			    counter++;
 			}
-			catch(IOException e){return false;}
+		    }
+		    catch(IOException e){ return null; }
+		    finally{ in.close(); }
+
+		    return content;
 		}
-		else{return true;}
+		catch (FileNotFoundException e){ return null; }
+		catch (IOException e){ return null; }
+	    }
+	    else{ return null; }
 	}
+	else{ return ""; }
+    }
+
+    /**
+     * Tests to see if a file is empty.
+     * @param path
+     * @return true if file is empty, else false.
+     */
+    public static boolean isEmpty(String path)
+    {
+	if(Common.isFile(path))
+	{
+	    try
+	    {
+		FileInputStream stream = new FileInputStream(new File(path));  
+		int b = stream.read(); 
+
+		if (b == -1)  
+		{  
+		    stream.close();
+		    return true;
+		}
+
+		stream.close();
+		return false;
+	    }
+	    catch(IOException e){return false;}
+	}
+	else{return true;}
+    }
 }

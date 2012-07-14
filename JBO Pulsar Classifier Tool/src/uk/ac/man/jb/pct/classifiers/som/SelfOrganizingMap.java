@@ -34,7 +34,6 @@ import uk.ac.man.jb.pct.util.SerializableBaseObject;
  * Class that represents a self organising map, with additional methods for classification.
  * 
  * @author Rob Lyon
- *
  */
 public class SelfOrganizingMap extends SerializableBaseObject
 {

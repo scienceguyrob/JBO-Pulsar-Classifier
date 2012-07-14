@@ -26,7 +26,11 @@
 package uk.ac.man.jb.pct.mvc.model;
 
 /**
- * I_Model
+ * I_Model defines methods to be implemented by a data
+ * model for this application. This interface is to be used
+ * to provide accessor methods for a data model supporting
+ * the GUI.
+ * 
  * @author Rob Lyon
  */
 public interface I_Model

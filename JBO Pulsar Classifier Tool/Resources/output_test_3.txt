@@ -1,0 +1,8 @@
+# Network Used: /Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/output_test_3.txt
+# Accuracy: 0.9676470588235294
+# MCC:0.8236303569301608
+# Total Patterns:1
+# Positive Patterns:0
+# Negative Patterns:1
+# 1 indicates pulsar, 0 RFI.
+2010-01-16-02:47:40.01.fil_sigproc_001.phcx.gz.dat,0,RFI,

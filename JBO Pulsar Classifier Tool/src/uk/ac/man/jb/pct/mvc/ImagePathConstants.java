@@ -30,7 +30,6 @@ package uk.ac.man.jb.pct.mvc;
  * used throughout the application.
  * 
  * @author Rob Lyon
- *
  */
 public class ImagePathConstants
 {

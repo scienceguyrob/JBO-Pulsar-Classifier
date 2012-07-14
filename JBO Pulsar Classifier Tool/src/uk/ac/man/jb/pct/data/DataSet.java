@@ -30,7 +30,9 @@ import java.util.UUID;
 import java.util.Vector;
 
 /**
- * DataSet
+ * DataSet. This class provides a simple and generic way
+ * to represent data read in to the application.
+ * 
  * @author Rob Lyon
  */
 public class DataSet implements I_DataSet

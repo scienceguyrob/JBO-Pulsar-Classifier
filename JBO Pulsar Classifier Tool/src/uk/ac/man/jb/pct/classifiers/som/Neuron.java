@@ -29,8 +29,8 @@ import uk.ac.man.jb.pct.util.SerializableBaseObject;
 
 /**
  * Class that represents a single neuron in the Self Organizing Map neural network.
+ * 
  * @author Rob Lyon
- *
  */
 public class Neuron extends SerializableBaseObject
 {
@@ -128,7 +128,7 @@ public class Neuron extends SerializableBaseObject
      * @param pattern The input pattern, containing planetary data.
      * @param winner The winning neuron during this training iteration.
      * @param iteration The current training iteration of the SOM.
-     * @returns The average correction to the weights of each connection.
+     * @return The average correction to the weights of each connection.
      */
     public double UpdateWeights(double[] pattern, Neuron winner, int iteration)
     {

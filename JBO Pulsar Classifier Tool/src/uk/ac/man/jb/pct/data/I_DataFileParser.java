@@ -26,7 +26,9 @@
 package uk.ac.man.jb.pct.data;
 
 /**
- * I_DataFileParser
+ * I_DataFileParser, defines an interface specifying the methods
+ * needed to read the data files used by the application.
+ * 
  * @author Rob Lyon
  */
 public interface I_DataFileParser
@@ -91,4 +93,12 @@ public interface I_DataFileParser
      * @see I_DataSet
      */
     public I_DataSet process(String path);
+    
+    /**
+     * Process a file containing raw data in tab delimited form.
+     * @param path the path to the file to read.
+     * @return the raw data as an I_InputPattern instance,
+     *         else null if the data is invalid.
+     */
+    public I_InputPattern processPatternFile(String path);
 }

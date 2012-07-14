@@ -26,9 +26,12 @@
 package uk.ac.man.jb.pct.mvc.model;
 
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 /**
- * I_CommandLineInputData
+ * I_CommandLineInputData, defines an interface for classes
+ * used to process command line parameters.
+ * 
  * @author Rob Lyon
  */
 public interface I_CommandLineInputData
@@ -201,8 +204,30 @@ public interface I_CommandLineInputData
     public int getClassifier();
     
     /**
+     * Sets the value of K for a KNN-classifier.
+     * @param i the new value.
+     */
+    public void setK(int i);
+    
+    /**
+     * @return the value of K to be used in a KNN-classifier
+     */
+    public int getK();
+    
+    /**
+     * @return the extra parameters passed to the application which aren't pre-defined.
+     */
+    public Vector<String> getExtraParams();
+    
+    /**
      * Processes a command line argument.
      * @param arg the argument to process.
      */
     public void processArgument(String arg);
+    
+    /**
+     * Allows parameters to be loaded from a file.
+     * @param path the path to the file containing settings.
+     */
+    public void loadSettings(String path);
 }

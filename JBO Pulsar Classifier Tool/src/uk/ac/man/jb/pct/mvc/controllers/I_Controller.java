@@ -28,7 +28,8 @@ package uk.ac.man.jb.pct.mvc.controllers;
 import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
 
 /**
- * I_Controller
+ * I_Controller, defines an interface for controller classes in this application.
+ * 
  * @author Rob Lyon
  */
 public interface I_Controller

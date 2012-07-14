@@ -29,7 +29,8 @@ import org.junit.Test;
 import uk.ac.man.jb.pct.util.StringOps;
 
 /**
- * TestHarness
+ * TestHarness, a class used to experiment during the construction of this application.
+ * 
  * @author Rob Lyon
  */
 public class TestHarness

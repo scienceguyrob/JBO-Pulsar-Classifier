@@ -28,6 +28,7 @@ package uk.ac.man.jb.pct.data;
 /**
  * I_InputPattern is an interface that defines the operations to be applied to input patterns
  * read in from input files.
+ * 
  * @author Rob Lyon
  */
 public interface I_InputPattern

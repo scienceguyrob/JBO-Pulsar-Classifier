@@ -32,7 +32,7 @@ import uk.ac.man.jb.pct.util.Common;
 /**
  * Class representing an individual input pattern.
  * 
- * @author Rob
+ * @author Rob Lyon
  *
  */
 public class InputPattern implements I_InputPattern

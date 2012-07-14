@@ -26,7 +26,8 @@
 package uk.ac.man.jb.pct.mvc.views;
 
 /**
- * I_View
+ * I_View defines an interface for this applications UI.
+ * 
  * @author Rob Lyon
  */
 public interface I_View

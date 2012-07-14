@@ -26,14 +26,16 @@
 package uk.ac.man.jb.pct.data;
 
 /**
- * I_DataSetTransformer
+ * I_DataSetTransformer defines methods that can be used
+ * to convert {@link I_DataSet} objects in to other forms.
+ * 
  * @author Rob Lyon
  */
 public interface I_DataSetTransformer
 {
     /**
-     * Converts a class that implements the {@link I_DataSet} interface
-     * to a string in CSV format, ready to be written to a file. The CSV
+     * Converts a class that implements the {@link I_DataSet} interface,
+     * in to a string in CSV format, ready to be written to a file. The CSV
      * format is as follows:
      * 
      * <Input Pattern ID>,<Class>,<Data item i>,...<Data item n>,

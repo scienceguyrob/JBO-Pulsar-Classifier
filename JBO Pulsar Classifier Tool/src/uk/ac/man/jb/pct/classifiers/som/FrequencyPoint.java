@@ -29,8 +29,8 @@ package uk.ac.man.jb.pct.classifiers.som;
  * Represents the coordinate of a positive instance in the feature map,
  * with an additional frequency parameter indicating how many times the
  * neuron at each particular location was fired.
+ * 
  * @author Rob Lyon
- *
  */
 public class FrequencyPoint 
 {
@@ -81,8 +81,8 @@ public class FrequencyPoint
 
     /**
      * Primary constructor.
-     * @param the x coordinate.
-     * @param the y coordinate.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
      * @param f the frequency the neuron at this coordinate is fired.
      */
     public FrequencyPoint(int x, int y, int f)

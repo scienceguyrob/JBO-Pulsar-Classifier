@@ -33,6 +33,8 @@ package uk.ac.man.jb.pct.io;
  * constructor. A single copy of this class is initialised in the main method
  * for the application, and this instance is then used throughout the program.
  * 
+ * This is used of Java's own logging classes for the sake of simplicity.
+ * 
  * @author Rob Lyon
  *
  */

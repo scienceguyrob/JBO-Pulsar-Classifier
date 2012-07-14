@@ -33,7 +33,6 @@ import java.io.File;
  * to be displayed on dialogs.
  * 
  * @author Rob Lyon
- *
  */
 public class Constants
 {   
@@ -102,12 +101,22 @@ public class Constants
      * Command line flag used to pass in the size of the map.
      */
     public static final String MAPSIZE_FLAG = "-w=";
+    
+    /**
+     * Command line flag used to pass in the value of K for a KNN classifier.
+     */
+    public static final String K_FLAG = "-k=";
 
     /**
      * Command line flag used to pass in the number of tests to run.
      */
     public static final String TESTS_FLAG = "-tests=";
 
+    /**
+     * Command line flag used to pass in the path to a file where application settings are stored.
+     */
+    public static final String SETTINGS_FLAG = "-settings=";
+    
     /**
      * The command line flags.
      */
@@ -116,7 +125,7 @@ public class Constants
 	DESIRED_ACCURACY_FLAG,COUNTRY_FLAG,CLASSIFIER_FLAG,
 	LANGUAGE_FLAG,LOGGING_FLAG,LOAD_NN_FLAG,SAVE_NN_FLAG,
 	TRAINING_SET_FLAG,VALIDATION_SET_FLAG,CLASSIFICATION_SET_FLAG,
-	OUTPUT_FILE_FLAG,MAPSIZE_FLAG,TESTS_FLAG
+	OUTPUT_FILE_FLAG,MAPSIZE_FLAG,TESTS_FLAG,K_FLAG,SETTINGS_FLAG
 	};
 
     //*****************************************

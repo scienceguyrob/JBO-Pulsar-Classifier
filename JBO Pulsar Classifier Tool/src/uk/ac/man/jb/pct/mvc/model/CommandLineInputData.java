@@ -27,12 +27,17 @@ package uk.ac.man.jb.pct.mvc.model;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Vector;
+import uk.ac.man.jb.pct.io.Reader;
 import uk.ac.man.jb.pct.mvc.Constants;
 import uk.ac.man.jb.pct.util.Common;
 import uk.ac.man.jb.pct.util.StringOps;
 
 /**
- * CommandLineInputData
+ * This class is used to process and store the command line
+ * input to the application. It is simply a wrapper that tries
+ * to simply the process of passing these in.
+ * 
  * @author Rob Lyon
  */
 public class CommandLineInputData implements I_CommandLineInputData
@@ -101,12 +106,22 @@ public class CommandLineInputData implements I_CommandLineInputData
     /**
      * The type of classifier to use.
      */
-    int classifier = -1;
+    int classifier = 0;
 
     /**
      * The number of tests to run against the classifier.
      */
     int tests = -1;
+
+    /**
+     * The value of k for a KNN-Classifier.
+     */
+    int k = 3;
+
+    /**
+     * Any extra parameters not expected or pre-defined.
+     */
+    Vector<String> extraParams = new Vector<String>();
 
     //*****************************************
     //*****************************************
@@ -281,6 +296,44 @@ public class CommandLineInputData implements I_CommandLineInputData
      */
     public int getClassifier() { return this.classifier; }
 
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setK(int)
+     */
+    public void setK(int i) { this.k = i; }
+
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getK()
+     */
+    public int getK() { return this.k; }
+
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getExtraParams()
+     */
+    public Vector<String> getExtraParams() { return this.extraParams; }
+
+    /* (non-Javadoc)
+     * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#loadSettings(java.lang.String)
+     */
+    public void loadSettings(String path)
+    {
+	try
+	{
+	    // Read the settings file, and store in an array.
+	    String[] contents = Reader.getContents(path).split("\r");
+
+	    // For each line from the settings file
+	    for(int i = 0 ; i < contents.length ; i++)
+	    {
+		if( !contents[i].startsWith(" ") && // As long as the line doesn't begin with whitespace
+			!contents[i].startsWith("//") && // or a comment
+			!contents[i].startsWith("#") && // or a hash symbol
+			!contents[i].contains("-settings=")) // or the path to another settings file
+		    this.processArgument(contents[i]); // THEN, process the argument.
+	    }
+	}
+	catch(NullPointerException npe){ System.out.println("Error reading settings file.");}
+    }
+
     //*****************************************
     //*****************************************
     //               Methods
@@ -332,9 +385,8 @@ public class CommandLineInputData implements I_CommandLineInputData
 	// There are four possible automation cases:
 	//
 	// 1. User wants to train a network automatically
-	// 2. User wants to train a network with via interface (semi-automated).
-	// 3. User wants to classify data.
-	// 4. User wants to tests the classifier
+	// 2. User wants to classify data.
+	// 3. User wants to tests the classifier
 	//
 	// Each of these cases requires slightly different inputs, so this method
 	// must ascertain if the application has been provided with enough information 
@@ -355,25 +407,19 @@ public class CommandLineInputData implements I_CommandLineInputData
 		return Constants.AUTOMATED_TRAINING;
 	}
 
-	// Case 2: Training the network semi-automatically (with user input).
-	//
-	// Requires: Training set, Validation set, and path to save the constructed network to.
-	if(!StringOps.isAStringsEmpty(this.trainingSetPath,this.validationSetPath,this.pathToSavedNetwork))
-	{
-	    return Constants.SEMI_AUTOMATED_TRAINING;
-	}
-
-	// Case 3: Data classification.
+	// Case 2: Data classification.
 	//
 	// Requires: Path to a previously saved neural network, the path to the data to be classified, 
 	//           and the path to the file to output results to.
 	// Optional: Type of clustering technique to use.
-	if(!StringOps.isAStringsEmpty(this.pathToSavedNetwork,this.classificationSetPath,this.outputFile))
+
+	if(!StringOps.isAStringsEmpty(this.pathToSavedNetwork,this.classificationSetPath,this.outputFile) |
+		( !StringOps.isAStringsEmpty(this.pathToSavedNetwork,this.outputFile) && this.extraParams.size() > 0))
 	{
 	    return Constants.AUTOMATED_CLASSIFICATION;
 	}
 
-	// Case 4: Test the accuracy of the neural network.
+	// Case 3: Test the accuracy of the neural network.
 	//
 	// Requires: Training set, Validation set, Type of classifier to use, 
 	//           the number of tests to run
@@ -441,6 +487,10 @@ public class CommandLineInputData implements I_CommandLineInputData
 	{
 	    this.setPathToOutputFile(StringOps.trimArgument(arg, Constants.OUTPUT_FILE_FLAG));
 	}
+	else if(arg.startsWith(Constants.SETTINGS_FLAG) || arg.startsWith(Constants.SETTINGS_FLAG.toUpperCase()))
+	{
+	    this.loadSettings((StringOps.trimArgument(arg, Constants.SETTINGS_FLAG)));
+	}
 	else if(arg.startsWith(Constants.MAPSIZE_FLAG) || arg.startsWith(Constants.MAPSIZE_FLAG.toUpperCase()))
 	{
 	    try
@@ -448,6 +498,14 @@ public class CommandLineInputData implements I_CommandLineInputData
 		this.setMapSize(Integer.parseInt(StringOps.trimArgument(arg, Constants.MAPSIZE_FLAG)));
 	    }
 	    catch(NumberFormatException nfe){ this.setMapSize(-1); }
+	}
+	else if(arg.startsWith(Constants.K_FLAG) || arg.startsWith(Constants.K_FLAG.toUpperCase()))
+	{
+	    try
+	    {
+		this.setK(Integer.parseInt(StringOps.trimArgument(arg, Constants.K_FLAG)));
+	    }
+	    catch(NumberFormatException nfe){ this.setK(3); }
 	}
 	else if(arg.startsWith(Constants.TESTS_FLAG) || arg.startsWith(Constants.TESTS_FLAG.toUpperCase()))
 	{
@@ -457,6 +515,7 @@ public class CommandLineInputData implements I_CommandLineInputData
 	    }
 	    catch(NumberFormatException nfe){ this.setTests(-1); }
 	}
+	else { this.extraParams.add(arg); } // Process any extra parameters not expected later.
     }
 
     /**
@@ -478,6 +537,7 @@ public class CommandLineInputData implements I_CommandLineInputData
 		"Map Width: "+this.mapWidth+ "\n"+
 		"Desired accuracy: "+this.desiredAccuracy+ "\n"+
 		"Classifier: "+this.classifier+ "\n"+
-		"Tests: "+this.tests+ "\n";
+		"Tests: "+this.tests+ "\n"+
+		"K Vlaue: "+this.k + "\n";
     }
 }
