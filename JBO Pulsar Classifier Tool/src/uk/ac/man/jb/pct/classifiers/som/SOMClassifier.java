@@ -185,7 +185,7 @@ public class SOMClassifier extends SerializableBaseObject
      * @param algorithm the algorithm to use for classification.
      * @return a string classification.
      */
-    public String classify(I_InputPattern p, int algorithm)
+    public Object[] classify(I_InputPattern p, int algorithm)
     {
 	switch(algorithm)
 	{
@@ -205,18 +205,18 @@ public class SOMClassifier extends SerializableBaseObject
      * @param p the input pattern.
      * @return the classification returned by this algorithm.
      */
-    public String classifyNaive(I_InputPattern p)
+    public Object[] classifyNaive(I_InputPattern p)
     {
 	Neuron winner = map.getWinningNeuron(p.getData());
 	Point coord = new Point(winner.X,winner.Y);
 
 	if(positiveCoords.contains(coord))
-	    return Constants.PULSAR;
+	    return new Object[]{Constants.PULSAR,coord};
 	else
-	    return Constants.RFI;
+	    return new Object[]{Constants.RFI,coord};
     }
 
-    public String classifyKNN(I_InputPattern p)
+    public Object[] classifyKNN(I_InputPattern p)
     {
 	Neuron winner = map.getWinningNeuron(p.getData());
 	Point coord = new Point(winner.X,winner.Y);
@@ -237,11 +237,11 @@ public class SOMClassifier extends SerializableBaseObject
 		neighbours++;
 
 		if(neighbours >= K)
-		    return Constants.PULSAR;
+		    return new Object[]{Constants.PULSAR,coord};
 	    }
 	}
 
-	return Constants.RFI;
+	return new Object[]{ Constants.RFI, coord };
     }
 
     /**
@@ -256,7 +256,7 @@ public class SOMClassifier extends SerializableBaseObject
 
 	for(int r = 0; r < v_data.getRows();r++)
 	{
-	    String classification = this.classify(v_data.getDataRow(r), algorithm);
+	    String classification = (String) this.classify(v_data.getDataRow(r), algorithm)[0].toString();
 
 	    //  CLASSIFICATION APPLIED --------------------------------- ACTUAL CLASS
 	    if( classification.equals(Constants.PULSAR) && v_data.getDataRow(r).getClassMembership().equals(Constants.PULSAR))

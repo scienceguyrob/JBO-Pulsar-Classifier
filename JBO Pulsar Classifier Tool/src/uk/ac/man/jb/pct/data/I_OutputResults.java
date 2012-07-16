@@ -25,6 +25,8 @@
  */
 package uk.ac.man.jb.pct.data;
 
+import java.awt.Point;
+
 /**
  * I_OutputResults, specifies the methods that can be used
  * to write classification results to output files.
@@ -45,15 +47,17 @@ public interface I_OutputResults
      * Writes a single classification to the output file.
      * @param p the pattern classified
      * @param classification the classification assigned
+     * @param coord the coordinate of the pattern in the map.
      */
-    public void writeSingleResult(I_InputPattern p, String classification);
+    public void writeSingleResult(I_InputPattern p, String classification,Point coord);
     
     /**
      * Processes an input pattern and its classification.
      * @param p the input pattern
      * @param classification the classification assigned to the pattern.
+     * @param coord the coordinate of the pattern in the map.
      */
-    public void process(I_InputPattern p, String classification);
+    public void process(I_InputPattern p, String classification,Point coord);
     
     /**
      * @return the total number of input patterns classified as positive (i.e. pulsar instances).

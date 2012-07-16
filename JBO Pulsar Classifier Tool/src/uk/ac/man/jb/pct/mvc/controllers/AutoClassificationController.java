@@ -25,6 +25,7 @@
  */
 package uk.ac.man.jb.pct.mvc.controllers;
 
+import java.awt.Point;
 import uk.ac.man.jb.pct.classifiers.som.SOMClassifier;
 import uk.ac.man.jb.pct.data.I_DataSet;
 import uk.ac.man.jb.pct.data.I_InputPattern;
@@ -125,6 +126,9 @@ public class AutoClassificationController implements I_Controller
 		int classifierChoice = input.getClassifier();
 		System.out.println("Using classifier: "+classifierChoice);
 
+		System.out.println("Using classifier: "+classifierChoice);
+		System.out.println("\n***********************************\n");
+
 		// Now the user may provide a variety of inputs, either
 		// 
 		// 1. A file containing raw data
@@ -138,7 +142,7 @@ public class AutoClassificationController implements I_Controller
 
 		OutputResults out = new OutputResults(); // Used to output the results obtained.
 		out.setOutputPath(this.input.getPathToOutputFile());
-		
+
 		// Clear the output file if it exists.
 		if(Common.fileExist(this.input.getPathToOutputFile()))
 		    Common.fileDelete(this.input.getPathToOutputFile());
@@ -151,7 +155,7 @@ public class AutoClassificationController implements I_Controller
 		    //*********************
 		    // Is the file a raw data file? If yes, read this file,
 		    // and classify the data it contains.
-		    if(this.input.getPathToClassificationFile().contains(".phcx")) // Raw data file
+		    if(this.input.getPathToClassificationFile().contains(".dat")) // Raw data file
 		    {
 			// Read data file, and create an input pattern instance
 			// containing the data ready for classification.
@@ -169,13 +173,16 @@ public class AutoClassificationController implements I_Controller
 			    System.out.println("This map cannot be used to classify this data - parameter mismatch.");
 			else
 			{
-			    // Classify the input pattern
-			    String classification = classifier.classify(pattern, input.getClassifier());
-			    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification);
-			    out.process(pattern, classification);// Write to file.
+			    // Classify the pattern
+			    Object[] results = classifier.classify(pattern, input.getClassifier());
+			    String classification = (String) results[0].toString();
+			    Point winningCoord = (Point) results[1];
+
+			    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
+			    out.process(pattern, classification,winningCoord); // Write to file.
 
 			    // Finally makes sure output file has details of the classifier used etc
-			    out.writeSummaryStatisitics(classifier.getStatistics(),input.getPathToOutputFile());
+			    out.writeSummaryStatisitics(classifier.getStatistics(),input.getPathToSavedNetwork());
 			}
 		    }
 		    //*********************
@@ -202,14 +209,18 @@ public class AutoClassificationController implements I_Controller
 			    // For each data file linked to
 			    for(int i = 0; i < data.getRows(); i ++)
 			    {
-				// Classify the file
-				String classification = classifier.classify(data.getDataRow(i), input.getClassifier());
-				System.out.println("Pattern: "+ StringOps.getFileNameFromPath(data.getDataRow(i).getName()) + " Classification: "+ classification);
-				out.process(data.getDataRow(i), classification);// Write to file.
+
+				// Classify the pattern
+				Object[] results = classifier.classify(data.getDataRow(i), input.getClassifier());
+				String classification = (String) results[0].toString();
+				Point winningCoord = (Point) results[1];
+
+				System.out.println("Pattern: "+ StringOps.getFileNameFromPath(data.getDataRow(i).getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
+				out.process(data.getDataRow(i), classification,winningCoord); // Write to file.
 			    }
 
 			    // Finally makes sure output file has details of the classifier used etc
-			    out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToOutputFile());
+			    out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToSavedNetwork());
 			}
 		    }		
 		}
@@ -220,7 +231,7 @@ public class AutoClassificationController implements I_Controller
 		else if(Common.isDirectory(this.input.getPathToClassificationFile()))
 		{
 		    // Get all the files in the specified directory
-		    String[] inputFiles = Common.getFilePaths(this.input.getPathToClassificationFile(),".phcx.gz.dat");
+		    String[] inputFiles = Common.getFilePaths(this.input.getPathToClassificationFile(),".dat");
 
 		    // If there are files to be processed
 		    if(inputFiles.length > 0)
@@ -231,24 +242,28 @@ public class AutoClassificationController implements I_Controller
 			    // Create an input pattern object from the file
 			    I_InputPattern pattern = p.processPatternFile(inputFiles[i]);
 
-			    if(pattern == null)
-				break;
-
-			    // If the pattern has the same number of attributes as the 
-			    // map to be used to classify it.
-			    if(pattern.getDataLength() != attributes)
-				System.out.println("This map cannot be used to classify this data - parameter mismatch.");
-			    else
+			    if(pattern != null)
 			    {
-				// Classify the pattern
-				String classification = classifier.classify(pattern, input.getClassifier());
-				System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification);
-				out.process(pattern, classification);// Write to file.
+
+				// If the pattern has the same number of attributes as the 
+				// map to be used to classify it.
+				if(pattern.getDataLength() != attributes)
+				    System.out.println("This map cannot be used to classify this data - parameter mismatch.");
+				else
+				{
+				    // Classify the pattern
+				    Object[] results = classifier.classify(pattern, input.getClassifier());
+				    String classification = (String) results[0].toString();
+				    Point winningCoord = (Point) results[1];
+
+				    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
+				    out.process(pattern, classification,winningCoord); // Write to file.
+				}
 			    }
 			}
 
 			// Finally makes sure output file has details of the classifier used etc
-			out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToOutputFile());
+			out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToSavedNetwork());
 		    }
 		}
 		//*********************
@@ -266,30 +281,34 @@ public class AutoClassificationController implements I_Controller
 			// For each file in the directory
 			for(int i = 0; i < unixParams; i++)
 			{
-			    if(this.input.getExtraParams().elementAt(i).contains(".phcx")) // Raw data file
+			    if(this.input.getExtraParams().elementAt(i).contains(".dat")) // Raw data file
 			    {
 				// Create an input pattern object from the file
 				I_InputPattern pattern = p.processPatternFile(this.input.getExtraParams().elementAt(i));
 
-				if(pattern == null)
-				    break;
-
-				// If the pattern has the same number of attributes as the 
-				// map to be used to classify it.
-				if(pattern.getDataLength() != attributes)
-				    System.out.println("This map cannot be used to classify this data - parameter mismatch.");
-				else
+				if(pattern != null)
 				{
-				    // Classify the pattern
-				    String classification = classifier.classify(pattern, input.getClassifier());
-				    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification);
-				    out.process(pattern, classification); // Write to file.
+
+				    // If the pattern has the same number of attributes as the 
+				    // map to be used to classify it.
+				    if(pattern.getDataLength() != attributes)
+					System.out.println("This map cannot be used to classify this data - parameter mismatch.");
+				    else
+				    {
+					// Classify the pattern
+					Object[] results = classifier.classify(pattern, input.getClassifier());
+					String classification = (String) results[0].toString();
+					Point winningCoord = (Point) results[1];
+
+					System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
+					out.process(pattern, classification,winningCoord); // Write to file.
+				    }
 				}
 			    }
 			}
 
 			// Finally makes sure output file has details of the classifier used etc
-			out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToOutputFile());
+			out.writeSummaryStatisitics(classifier.getStatistics(), input.getPathToSavedNetwork());
 		    }
 		}
 	    }
