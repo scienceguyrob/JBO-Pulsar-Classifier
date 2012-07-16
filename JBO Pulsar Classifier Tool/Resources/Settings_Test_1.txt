@@ -23,6 +23,6 @@
 -t=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/training_set_mod.pat
 -v=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/validation_set.pat
 -classifier=1
--w=5
+-w=13
 -acc=75
--save=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/test_network_accuracy_96.xml
+-save=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/foo.xml

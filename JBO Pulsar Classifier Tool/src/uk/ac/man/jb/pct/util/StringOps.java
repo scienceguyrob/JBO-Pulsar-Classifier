@@ -264,9 +264,9 @@ public class StringOps
 	    {
 		// Get the path to the parent directory.
 		return fileName;
-	    }else { return null; }
+	    }else { return path; }
 	}
-	else { return null; }
+	else { return path; }
     }
 
     /**

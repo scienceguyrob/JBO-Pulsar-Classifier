@@ -53,7 +53,7 @@ public class Writer
     public static boolean write(String path, String text)
     {
 	if(!Common.fileExist(path))//Check file exists
-	    Common.fileCreate(path);//if not delete it
+	    Common.fileCreate(path);//if not create it
 
 	if(Common.fileExist(path))//make sure the file we created exists
 	{

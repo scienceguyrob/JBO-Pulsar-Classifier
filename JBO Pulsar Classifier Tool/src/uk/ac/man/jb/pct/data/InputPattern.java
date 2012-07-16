@@ -105,19 +105,16 @@ public class InputPattern implements I_InputPattern
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#getClassMembership()
      */
-    @Override
     public String getClassMembership(){ return this.classLabel; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#getData()
      */
-    @Override
     public double[] getData(){ return this.data; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#getData(int[])
      */
-    @Override
     public double[] getData(int[] indexes)
     {	
 	if(indexes.length > 0 && indexes.length <= data.length)
@@ -162,31 +159,26 @@ public class InputPattern implements I_InputPattern
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#getName()
      */
-    @Override
     public String getName(){ return this.name; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#setData(java.util.Vector)
      */
-    @Override
     public void setData(double[] d){ this.data = d; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#setName(java.lang.String)
      */
-    @Override
     public void setName(String n){ this.name = n; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#setClassMembership(java.lang.String)
      */
-    @Override
     public void setClassMembership(String c){ this.classLabel = c;}
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#getScoreCount()
      */
-    @Override
     public int getScoreCount()
     {
 	if(data != null)
@@ -197,7 +189,6 @@ public class InputPattern implements I_InputPattern
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_InputPattern#isClassMember()
      */
-    @Override
     public boolean isClassMember()
     {
 	if(Common.isEmptyString(this.classLabel))

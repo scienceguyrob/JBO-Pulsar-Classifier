@@ -142,128 +142,107 @@ public class CommandLineInputData implements I_CommandLineInputData
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#enableLogging()
-     */
-    @Override
+     */   
     public void enableLogging() { this.logging = true; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#disableLogging()
-     */
-    @Override
+     */   
     public void disableLogging() { this.logging = false; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#isLoggingEnabled()
-     */
-    @Override
+     */   
     public boolean isLoggingEnabled() { return this.logging; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setLanguage(java.lang.String)
-     */
-    @Override
+     */   
     public void setLanguage(String l) { this.language = l; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getLanguage()
-     */
-    @Override
+     */    
     public String getLanguage() { return this.language; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setLocale(java.lang.String)
-     */
-    @Override
+     */    
     public void setCountry(String l){ this.country = l; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getLocale()
      */
-    @Override
     public String getCountry() { return this.country; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setPathToSavedNetwork(java.lang.String)
-     */
-    @Override
+     */   
     public void setPathToSavedNetwork(String p) { this.pathToSavedNetwork = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getPathToSavedNetwork()
-     */
-    @Override
+     */   
     public String getPathToSavedNetwork() { return this.pathToSavedNetwork; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setNetworkSavePath(java.lang.String)
-     */
-    @Override
+     */   
     public void setNetworkSavePath(String p) { this.saveNeuralNetworkToPath = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getNetworkSavePath()
-     */
-    @Override
+     */   
     public String getNetworkSavePath() { return this.saveNeuralNetworkToPath; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setPathToTrainingFile(java.lang.String)
-     */
-    @Override
+     */    
     public void setPathToTrainingFile(String p) { this.trainingSetPath = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getPathToTrainingFile()
-     */
-    @Override
+     */  
     public String getPathToTrainingFile() { return this.trainingSetPath; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setPathToValidationFile(java.lang.String)
-     */
-    @Override
+     */  
     public void setPathToValidationFile(String p) { this.validationSetPath = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getPathToValidationFile()
-     */
-    @Override
+     */   
     public String getPathToValidationFile() { return this.validationSetPath; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setPathToClassificationFile(java.lang.String)
-     */
-    @Override
+     */   
     public void setPathToClassificationFile(String p) { this.classificationSetPath = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getPathToClassificationFile()
-     */
-    @Override
+     */ 
     public String getPathToClassificationFile() { return this.classificationSetPath; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setPathToOutputFile(java.lang.String)
-     */
-    @Override
+     */  
     public void setPathToOutputFile(String p) { this.outputFile = p; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getPathToOutputFile()
-     */
-    @Override
+     */  
     public String getPathToOutputFile() { return this.outputFile; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#setMapSize(int)
-     */
-    @Override
+     */   
     public void setMapSize(int s) { this.mapWidth = s; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getMapSize()
-     */
-    @Override
+     */   
     public int getMapSize() { return this.mapWidth; }
 
     /* (non-Javadoc)
@@ -342,8 +321,7 @@ public class CommandLineInputData implements I_CommandLineInputData
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#getResourceBundle()
-     */
-    @Override
+     */  
     public ResourceBundle getResourceBundle()
     {
 	// Get locale and country information.
@@ -378,8 +356,7 @@ public class CommandLineInputData implements I_CommandLineInputData
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData#isValid()
-     */
-    @Override
+     */   
     public String getActionPossibleFromInputs()
     {
 	// There are four possible automation cases:
@@ -520,8 +497,7 @@ public class CommandLineInputData implements I_CommandLineInputData
 
     /**
      * Over-ridden toString method.
-     */
-    @Override
+     */   
     public String toString()
     {
 	return "Command Line Input Data Object\n"+

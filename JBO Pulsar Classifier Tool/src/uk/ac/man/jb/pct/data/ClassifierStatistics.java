@@ -121,117 +121,112 @@ public class ClassifierStatistics implements I_ClassifierStatistics
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getAccuracy()
-     */
-    @Override
+     */   
     public double getAccuracy() { return accuracy; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setAccuracy(double)
-     */
-    @Override
+     */   
     public void setAccuracy(double accuracy) { this.accuracy = accuracy; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getPrecision()
-     */
-    @Override
+     */   
     public double getPrecision() { return precision; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setPrecision(double)
      */
-    @Override
     public void setPrecision(double precision) { this.precision = precision; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getRecall()
-     */
-    @Override
+     */  
     public double getRecall() { return recall; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setRecall(double)
-     */
-    @Override
+     */ 
     public void setRecall(double recall) { this.recall = recall; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getSpecificity()
      */
-    @Override
     public double getSpecificity() { return specificity; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setSpecificity(double)
      */
-    @Override
     public void setSpecificity(double specificity) { this.specificity = specificity; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getMatthewsCorrelation()
      */
-    @Override
     public double getMatthewsCorrelation() { return matthewsCorrelation; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setMatthewsCorrelation(double)
      */
-    @Override
     public void setMatthewsCorrelation(double matthewsCorrelation) { this.matthewsCorrelation = matthewsCorrelation; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getfScore()
-     */
-    @Override
+     */  
     public double getfScore() { return fScore; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFScore(double)
      */
-    @Override
     public void setFScore(double fScore) { this.fScore = fScore; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getNegativePredictiveValue()
-     */
-    @Override
+     */  
     public double getNegativePredictiveValue() { return negativePredictiveValue; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setNegativePredictiveValue(double)
-     */
-    @Override
+     */    
     public void setNegativePredictiveValue(double d){ negativePredictiveValue = d; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getTP()
-     */
-    @Override
+     */  
     public double getTP() { return TP; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setTP(double)
      */
-    @Override
     public void setTP(double v) { this.TP = v; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getTN()
      */
-    @Override
     public double getTN() { return TN; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setTN(double)
-     */
-    @Override
+     */   
     public void setTN(double v) { this.TN = v; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getFP()
-     */
-    @Override
+     */    
     public double getFP() { return FP; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFP(double)
-     */
-    @Override
+     */   
     public void setFP(double v) { this.FP = v; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getFN()
-     */
-    @Override
+     */  
     public double getFN() { return FN; }
+    
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFN(double)
-     */
-    @Override
+     */  
     public void setFN(double v) { this.FN = v; }
 
     //*****************************************
@@ -268,8 +263,7 @@ public class ClassifierStatistics implements I_ClassifierStatistics
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#calculate()
-     */
-    @Override
+     */  
     public void calculate()
     {
 	accuracy = (TP + TN) / (TP + FP + FN + TN);
@@ -311,7 +305,6 @@ public class ClassifierStatistics implements I_ClassifierStatistics
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
     public String toString()
     {
 	String output = "Accuracy:\t"+ (accuracy * 100) + "\n" +

@@ -33,7 +33,6 @@ import uk.ac.man.jb.pct.data.OutputResults;
 import uk.ac.man.jb.pct.data.PatternFileProcessor;
 import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
 import uk.ac.man.jb.pct.util.Common;
-import uk.ac.man.jb.pct.util.StringOps;
 
 /**
  * AutoClassificationController. This class is used to automatically
@@ -153,6 +152,7 @@ public class AutoClassificationController implements I_Controller
 		    //*********************
 		    //      Case 1.
 		    //*********************
+		    System.out.println("CASE 1.");
 		    // Is the file a raw data file? If yes, read this file,
 		    // and classify the data it contains.
 		    if(this.input.getPathToClassificationFile().contains(".dat")) // Raw data file
@@ -178,7 +178,6 @@ public class AutoClassificationController implements I_Controller
 			    String classification = (String) results[0].toString();
 			    Point winningCoord = (Point) results[1];
 
-			    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
 			    out.process(pattern, classification,winningCoord); // Write to file.
 
 			    // Finally makes sure output file has details of the classifier used etc
@@ -191,6 +190,7 @@ public class AutoClassificationController implements I_Controller
 		    // The input is a file containing links to other files.
 		    else
 		    {
+			System.out.println("CASE 2.");
 			// Read the file into a data set object
 			data = p.processLinkFile(this.input.getPathToClassificationFile());
 
@@ -215,7 +215,6 @@ public class AutoClassificationController implements I_Controller
 				String classification = (String) results[0].toString();
 				Point winningCoord = (Point) results[1];
 
-				System.out.println("Pattern: "+ StringOps.getFileNameFromPath(data.getDataRow(i).getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
 				out.process(data.getDataRow(i), classification,winningCoord); // Write to file.
 			    }
 
@@ -230,6 +229,7 @@ public class AutoClassificationController implements I_Controller
 		// User has provided a directory path.
 		else if(Common.isDirectory(this.input.getPathToClassificationFile()))
 		{
+		    System.out.println("CASE 3.");
 		    // Get all the files in the specified directory
 		    String[] inputFiles = Common.getFilePaths(this.input.getPathToClassificationFile(),".dat");
 
@@ -256,7 +256,6 @@ public class AutoClassificationController implements I_Controller
 				    String classification = (String) results[0].toString();
 				    Point winningCoord = (Point) results[1];
 
-				    System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
 				    out.process(pattern, classification,winningCoord); // Write to file.
 				}
 			    }
@@ -272,6 +271,7 @@ public class AutoClassificationController implements I_Controller
 		// File paths passed in from the unix terminal
 		else
 		{
+		    System.out.println("CASE 4.");
 		    // Count unix parameters
 		    int unixParams = input.getExtraParams().size();
 
@@ -300,8 +300,7 @@ public class AutoClassificationController implements I_Controller
 					String classification = (String) results[0].toString();
 					Point winningCoord = (Point) results[1];
 
-					System.out.println("Pattern: "+ StringOps.getFileNameFromPath(pattern.getName()) + " Classification: "+ classification + " X:"+winningCoord.x + " Y:"+winningCoord.y);
-					out.process(pattern, classification,winningCoord); // Write to file.
+					out.process(pattern,classification,winningCoord); // Write to file.
 				    }
 				}
 			    }

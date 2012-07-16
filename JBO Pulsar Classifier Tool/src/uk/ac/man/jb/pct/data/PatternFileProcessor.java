@@ -62,7 +62,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_DataFileParser#processCSV()
      */
-    @Override
     public I_DataSet processCSV(String path)
     {
 	// TODO Auto-generated method stub
@@ -72,7 +71,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_DataFileParser#processTAB()
      */
-    @Override
     public I_DataSet processTAB(String path)
     {
 	// TODO Auto-generated method stub
@@ -82,7 +80,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_DataFileParser#processSNNS()
      */
-    @Override
     public I_DataSet processSNNS(String path)
     {
 	// The input file is of the form:
@@ -174,7 +171,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pst.preprocessor.I_DataFileParser#processXML()
      */
-    @Override
     public I_DataSet processXML(String path)
     {
 	// TODO Auto-generated method stub
@@ -184,7 +180,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_DataFileParser#processPatternFile(java.lang.String)
      */
-    @Override
     public I_InputPattern processPatternFile(String path)
     {
 	InputPattern pattern = null;
@@ -236,7 +231,6 @@ public class PatternFileProcessor implements I_DataFileParser
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_DataFileParser#processLinkFile(java.lang.String)
      */
-    @Override
     public I_DataSet processLinkFile(String path)
     {
 	// The input file is of the general form:

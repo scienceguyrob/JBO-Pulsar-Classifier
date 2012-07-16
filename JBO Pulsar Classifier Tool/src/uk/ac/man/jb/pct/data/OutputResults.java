@@ -26,7 +26,7 @@
 package uk.ac.man.jb.pct.data;
 
 import java.awt.Point;
-import uk.ac.man.jb.pct.io.Reader;
+//import uk.ac.man.jb.pct.io.Reader; // Just uncommented for now.
 import uk.ac.man.jb.pct.io.Writer;
 import uk.ac.man.jb.pct.mvc.Constants;
 import uk.ac.man.jb.pct.util.StringOps;
@@ -73,19 +73,16 @@ public class OutputResults implements I_OutputResults
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#getPositiveClassifications()
      */
-    @Override
     public int getPositiveClassifications() { return this.positives; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#getNegativeClassifications()
      */
-    @Override
     public int getNegativeClassifications() { return this.negatives; }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#getTotalClassifications()
      */
-    @Override
     public int getTotalClassifications() { return this.total; }
 
     //*****************************************
@@ -108,10 +105,9 @@ public class OutputResults implements I_OutputResults
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#writeSummaryStatisitics(uk.ac.man.jb.pct.data.I_ClassifierStatistics)
      */
-    @Override
     public void writeSummaryStatisitics(I_ClassifierStatistics s,String classifierPath)
     {
-	String preliminaryData = Reader.getContents(this.path);
+	//String preliminaryData = Reader.getContents(this.path);
 	
 	String finalData = "# Network Used: " + classifierPath + "\n" +
 		           "# Accuracy: " + s.getAccuracy() + "\n" +
@@ -121,26 +117,27 @@ public class OutputResults implements I_OutputResults
 		           "# Negative Patterns:"+ this.negatives + "\n" + 
 		           "# 1 indicates pulsar, 0 RFI.\n" + 
 		           "# File Structure:\n"+
-		           "# <File Name>,<X co-ord>,<Y co-ord>,<binary classification>,<text classification>,\n"+
-		           preliminaryData;
+		           "# <File Name>,<X co-ord>,<Y co-ord>,<binary classification>,<text classification>,\n";
+		          // preliminaryData;
 	
-	Writer.clear(this.path);
+	//Writer.clear(this.path);
 	Writer.write(path, finalData);
     }
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#writeSingleResult(uk.ac.man.jb.pct.data.I_InputPattern, java.lang.String)
      */
-    @Override
     public void writeSingleResult(I_InputPattern p, String classification, Point coord)
     {
 	if(classification.equals(Constants.PULSAR))
 	{
+	    System.out.println("DATA "+StringOps.getFileNameFromPath(p.getName()) + ","+coord.x+","+coord.y+",1,Pulsar,\n");
 	    String text = StringOps.getFileNameFromPath(p.getName()) + ","+coord.x+","+coord.y+",1,Pulsar,\n";
 	    Writer.write(path,text);
 	}
 	else
 	{
+	    System.out.println("DATA "+StringOps.getFileNameFromPath(p.getName()) + ","+coord.x+","+coord.y+",0,RFI,\n");
 	    String text = StringOps.getFileNameFromPath(p.getName()) + ","+coord.x+","+coord.y+",0,RFI,\n";
 	    Writer.write(path,text);
 	}
@@ -149,7 +146,6 @@ public class OutputResults implements I_OutputResults
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#process(uk.ac.man.jb.pct.data.I_InputPattern, java.lang.String)
      */
-    @Override
     public void process(I_InputPattern p, String classification, Point coord)
     {
 	if(classification.equals(Constants.PULSAR))
@@ -167,12 +163,10 @@ public class OutputResults implements I_OutputResults
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#incrementPositiveClassifications()
      */
-    @Override
     public void incrementPositiveClassifications() { this.positives++; this.total++;}
 
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_OutputResults#incrementNegativeClassifications()
      */
-    @Override
     public void incrementNegativeClassifications() { this.negatives++; this.total++;}
 }
