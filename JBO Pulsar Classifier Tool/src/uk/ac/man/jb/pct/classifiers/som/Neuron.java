@@ -125,7 +125,7 @@ public class Neuron extends SerializableBaseObject
     /**
      * Updates the weights of the winning neuron.
      * 
-     * @param pattern The input pattern, containing planetary data.
+     * @param pattern The input pattern, containing data.
      * @param winner The winning neuron during this training iteration.
      * @param iteration The current training iteration of the SOM.
      * @return The average correction to the weights of each connection.

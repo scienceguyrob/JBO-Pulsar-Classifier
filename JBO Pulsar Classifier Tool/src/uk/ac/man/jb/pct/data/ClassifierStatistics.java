@@ -123,67 +123,67 @@ public class ClassifierStatistics implements I_ClassifierStatistics
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getAccuracy()
      */   
     public double getAccuracy() { return accuracy; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setAccuracy(double)
      */   
     public void setAccuracy(double accuracy) { this.accuracy = accuracy; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getPrecision()
      */   
     public double getPrecision() { return precision; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setPrecision(double)
      */
     public void setPrecision(double precision) { this.precision = precision; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getRecall()
      */  
     public double getRecall() { return recall; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setRecall(double)
      */ 
     public void setRecall(double recall) { this.recall = recall; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getSpecificity()
      */
     public double getSpecificity() { return specificity; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setSpecificity(double)
      */
     public void setSpecificity(double specificity) { this.specificity = specificity; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getMatthewsCorrelation()
      */
     public double getMatthewsCorrelation() { return matthewsCorrelation; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setMatthewsCorrelation(double)
      */
     public void setMatthewsCorrelation(double matthewsCorrelation) { this.matthewsCorrelation = matthewsCorrelation; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getfScore()
      */  
-    public double getfScore() { return fScore; }
-    
+    public double getfScore() { return this.fScore; }
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFScore(double)
      */
     public void setFScore(double fScore) { this.fScore = fScore; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getNegativePredictiveValue()
      */  
     public double getNegativePredictiveValue() { return negativePredictiveValue; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setNegativePredictiveValue(double)
      */    
@@ -193,7 +193,7 @@ public class ClassifierStatistics implements I_ClassifierStatistics
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getTP()
      */  
     public double getTP() { return TP; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setTP(double)
      */
@@ -203,7 +203,7 @@ public class ClassifierStatistics implements I_ClassifierStatistics
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getTN()
      */
     public double getTN() { return TN; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setTN(double)
      */   
@@ -213,7 +213,7 @@ public class ClassifierStatistics implements I_ClassifierStatistics
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getFP()
      */    
     public double getFP() { return FP; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFP(double)
      */   
@@ -223,7 +223,7 @@ public class ClassifierStatistics implements I_ClassifierStatistics
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#getFN()
      */  
     public double getFN() { return FN; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#setFN(double)
      */  
@@ -280,40 +280,65 @@ public class ClassifierStatistics implements I_ClassifierStatistics
 	matthewsCorrelation = ((TP * TN) - (FP * FN)) / Math.sqrt((TP+FP) * (TP+FN) * (TN+FP) * (TN+FN));
 
 	fScore = 2 * ((precision * recall) / (precision + recall));
+	
+	if(Double.isNaN(accuracy))
+	    accuracy = 0.0;
+	
+	if(Double.isNaN(precision))
+	    precision = 0.0;
+	
+	if(Double.isNaN(recall))
+	    recall = 0.0;
+	
+	if(Double.isNaN(specificity))
+	    specificity = 0.0;
+	
+	if(Double.isNaN(negativePredictiveValue))
+	    negativePredictiveValue = 0.0;
+	
+	if(Double.isNaN(matthewsCorrelation))
+	    matthewsCorrelation = 0.0;
+	
+	if(Double.isNaN(fScore))
+	    fScore = 0.0;
     }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#incrementTP()
      */
     public void incrementTP() { this.TP++; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#incrementTN()
      */
     public void incrementTN() { this.TN++; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#incrementFP()
      */
     public void incrementFP() { this.FP++; }
-    
+
     /* (non-Javadoc)
      * @see uk.ac.man.jb.pct.data.I_ClassifierStatistics#incrementFN()
      */
     public void incrementFN() { this.FN++; }
-    
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-	String output = "Accuracy:\t"+ (accuracy * 100) + "\n" +
-	                "Precision:\t"+ (precision * 100) + "\n" +
-	                "Recall:\t"+ (recall * 100) + "\n" +
-	                "Specificity:\t"+ (specificity * 100) + "\n" +
-	                "NPV:\t"+ (negativePredictiveValue * 100) + "\t(Negative Predictive Value)\n" +
-	                "MCC:\t"+ matthewsCorrelation + "\t(Matthews Correlation Coefficient)\n" +
-	                "F-Score:\t"+ fScore;
+	String output = "TP:\t"+ this.TP + "\n"+
+		"TN:\t"+ this.TN + "\n"+
+		"FP:\t"+ this.FP + "\n"+
+		"FN:\t"+ this.FN + "\n"+
+		"Accuracy:\t"+ (accuracy * 100) + "\n" +
+		"Precision:\t"+ (precision * 100) + "\n" +
+		"Recall:\t"+ (recall * 100) + "\n" +
+		"Specificity:\t"+ (specificity * 100) + "\n" +
+		"NPV:\t"+ (negativePredictiveValue * 100) + "\t(Negative Predictive Value)\n" +
+		"MCC:\t"+ matthewsCorrelation + "\t(Matthews Correlation Coefficient)\n" +
+		"F-Score:\t"+ fScore;
 	return output;
     }
 }

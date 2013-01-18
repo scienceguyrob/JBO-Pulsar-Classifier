@@ -1,0 +1,29 @@
+// Settings File for the Pulsar Classification Tool.
+// This settings file contains parameters used
+// to test the auto generation of neural networks.
+//
+// Possible parameters:
+//
+// -acc=          The desired accuracy of the network being trained (0 - 100).    
+// -country=      The country choice for GUI setup, i.e. UK.
+// -classifier=   The desired classifier to use, 1 is KNN, 0 is naive.
+// -lang=         The language choice for GUI setup, i.e. EN.
+// -load=         The neural network to load.
+// -save=         The path to save a neural network at.
+// -t=            Path to the training set.
+// -v=            Path to the validation set.
+// -k=            Value of K for a KNN classifier (between 2 and 9 arbitrarily).
+// -tests=        The number of tests to run.
+// -w=            The width of the self organizing map, defaults to 10.
+
+// Training inputs
+// These inputs tests the ability of the application to automatically classify a
+// directory full of data files. The application must read the directory, locate
+// all the data files and classify them. Here a previously generate neural network
+// is specified, as to is the path to the output file to write the results
+// of classification to.
+
+-classifier=1
+-load=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/test_network_accuracy_96.xml
+-o=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/output_test_6.txt
+-c=/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/SecondTestData

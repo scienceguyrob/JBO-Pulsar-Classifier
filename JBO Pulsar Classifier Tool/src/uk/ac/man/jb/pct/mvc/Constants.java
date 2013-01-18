@@ -160,8 +160,9 @@ public class Constants
     //*****************************************
     
     public static final String PULSAR = "Pulsar";
+    public static final String NOT_PULSAR = "NotPulsar";
     public static final String RFI = "RFI";
-    
+    public static final String UNKNOWN = "Unknown";   
 
     //*****************************************
     //*****************************************

@@ -112,6 +112,7 @@ public class SelfOrganizingMap extends SerializableBaseObject
     public void setMapWidth(int mapWidth) { this.mapWidth = mapWidth; }
     public double getMaximumErrorRate() { return maximumErrorRate; }
     public void setMaximumErrorRate(double maximumErrorRate) { this.maximumErrorRate = maximumErrorRate; }
+    public void setData(ArrayList<double[]> d){ this.data = d; }
 
     //*****************************************
     //*****************************************
@@ -169,6 +170,92 @@ public class SelfOrganizingMap extends SerializableBaseObject
 	}
     }
 
+    /**
+     * Trains the SOM neural network.
+     * 
+     * @param maxError The maximum permissible error rate for the network.
+     */
+    public void TrainNoRandom(double maxError)
+    {
+	//set the current error level to largest
+	//permissible double value.
+	double currentError = Double.MAX_VALUE;
+
+	//While the error rate is unacceptable.
+	while (currentError > maxError)
+	{
+	    currentError = 0;
+
+	    //Create a data structure that can store training data.
+	    ArrayList<double[]> trainingSet = new ArrayList<double[]>();
+
+	    //For each input data instance, add this to the training set.
+	    Iterator<double[]> dataSetIterator = data.iterator(); 
+	    while(dataSetIterator.hasNext()) { trainingSet.add(dataSetIterator.next()); }
+
+	    //Now we actually train the network using the data.
+	    for (int i = 0; i < data.size(); i++)
+	    {
+		//Choose a pattern at random from the training set.
+		double[] pattern = null;
+		
+		if(i == 0)
+		{
+		    //System.out.println(data.size() - 1);
+		    pattern = trainingSet.get(data.size() - 1);
+		}
+		else if(i != 0)
+		{
+		    //System.out.println(data.size() - i-1);
+		    pattern = trainingSet.get(data.size() - i-1);
+		}
+		
+		//String concat = " ";
+		//for(int z = 0; z < pattern.length ; z++)
+		//{
+		//	concat += Double.toString(pattern[z]);
+		//	concat += " ";
+		//}
+
+		//c.output("Training on pattern: "+concat);
+
+		//Train the network on the random pattern,
+		//and update the error rate.
+
+		//the error for the pattern about to be passed into the network
+		double patternError = 0;
+
+		//Retrieve the output neuron that fires 
+		//upon reading the input pattern.
+		Neuron winner = getWinningNeuron(pattern);
+		//c.output("Winning Neuron: X:"+winner.X+" Y: " +winner.Y);
+
+		//For each neuron in the 2D map space
+		for (int j = 0; j < mapWidth; j++)
+		{
+		    for (int k = 0; k < mapWidth; k++)
+		    {
+			//Calculate the corrections that need to be made
+			//to the weight of connections around each neuron. Those
+			//closest to the output neuron at position [i,j] will have their
+			//connection weights strengthened. The average corrections to connection
+			//weights is returned and added to the error rate.
+			patternError += outputNeurons[j][k].UpdateWeights(pattern, winner, iteration);
+		    }
+		}
+
+		//Increment the number of training iterations.
+		iteration++;
+
+		//update the current error
+		currentError += Math.abs(patternError / (mapWidth * mapWidth));
+
+		//Remove the pattern from the training set.
+		trainingSet.remove(pattern);
+	    }
+	}
+    }
+    
     /**
      * Trains the SOM neural network.
      * 

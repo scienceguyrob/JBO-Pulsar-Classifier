@@ -26,6 +26,7 @@
 
 
 import java.awt.EventQueue;
+import java.util.Random;
 import javax.swing.UIManager;
 import uk.ac.man.jb.pct.io.DebugLogger;
 import uk.ac.man.jb.pct.io.Logging;
@@ -35,6 +36,7 @@ import uk.ac.man.jb.pct.mvc.controllers.AutoTrainerController;
 import uk.ac.man.jb.pct.mvc.controllers.I_Controller;
 import uk.ac.man.jb.pct.mvc.model.CommandLineInputData;
 import uk.ac.man.jb.pct.mvc.model.I_CommandLineInputData;
+import uk.ac.man.jb.pct.test.Experiments;
 
 /**
  * The JBOPulsarClassificationTool is an application used to classify
@@ -122,7 +124,7 @@ public class JBOPulsarClassificationTool
 	else // BUILD GUI
 	{
 	    System.out.println("No Arguments supplied.\n");
-	    
+
 	    System.out.println("********************************************************************************");
 	    System.out.println("Usage: java -jar JBOPulsarClassificationTool <arg 1> ... < arg n>" );
 	    System.out.println("Arguments:");
@@ -165,6 +167,54 @@ public class JBOPulsarClassificationTool
 			//Logging.log("Could not initialise Controller exiting");
 
 			System.out.println("GUI not built yet!");
+
+			//**************************************************
+			//*        ADDED TO FIND CLUSTER SIMILARITY        *
+			//**************************************************
+
+			/*
+			// Variables
+			String t_DataPath = "/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/training_set_mod.pat";
+			String v_DataPath = "/Users/rob/git/JBO-Pulsar-Classifier/JBO Pulsar Classifier Tool/Resources/validation_set.pat";
+			String initialisedNetworkPath = "/Users/rob/PRE_INITIALISED_NETWORK.xml";
+			String outputFilePath = "/Users/rob/CLUSTER_RESULTS.txt";
+			int classifier_type = 1;// KNN
+			int mapWidth = 12;
+			
+			//Experiments.preInitialiseSOM(t_DataPath, initialisedNetworkPath, mapWidth);
+			
+			Experiments.getClusterSimilarity(classifier_type, initialisedNetworkPath, t_DataPath, v_DataPath, outputFilePath);
+			
+			 */
+
+			//**************************************************
+			//*        		END           		   *
+			//**************************************************
+
+			//**************************************************
+			//*        ADDED TO TEST WITH LARGE DATA           *
+			//**************************************************
+			
+			
+			String pathToClassificationFiles = "/Users/rob/Sugarsync/Code/workspace/DATA/CandidateData/ClassificationData/snss_versions";
+			String pathToTrainingFiles = "/Users/rob/Sugarsync/Code/workspace/DATA/CandidateData/TrainingData";// Original training set
+			//String pathToTrainingFiles = "/Users/rob/Sugarsync/Code/workspace/DATA/CandidateData/TrainingData_Negatives_Altered/snss_versions/random_loaded"; // Negatives altered
+			//String pathToTrainingFiles = "/Users/rob/Sugarsync/Code/workspace/DATA/CandidateData/TrainingData_Positive_Labelling_Altered/snss_versions/random_loaded";// Positives relabelled
+			//String pathToTrainingFiles = "/Users/rob/Sugarsync/Code/workspace/DATA/CandidateData/TrainingData_Positives_Altered/snss_versions/random_loaded";// Positives removed
+			int classifier_type = 1;// KNN
+			int mapWidth = 12;
+			int k = 13;
+			int min_k = 1;
+			int max_k = 21;
+			int tieBreakingParameter = 1;//Randomly
+			
+			//Experiments.classificationTestsStaticK(pathToTrainingFiles, pathToClassificationFiles, classifier_type, mapWidth, k);
+			Experiments.classificationTestsVariableK(pathToTrainingFiles,pathToClassificationFiles,mapWidth,k,tieBreakingParameter);			
+			
+			System.exit(0);
+			//**************************************************
+			//*                   REMOVE                       *
+			//**************************************************
 		    }
 		    catch (Exception e)
 		    { 
@@ -192,5 +242,28 @@ public class JBOPulsarClassificationTool
 	System.out.println(" -settings=     The path to a settings file that may contain these arguments.");
 	System.out.println("********************************************************************************\n\n");
 	System.out.println("Done.");
+    }
+
+    /**
+     * Calculates the distance between two points in the 2D co-ordinate plane.
+     * @param x1 Point x1.
+     * @param y1 Point y1.
+     * @param x2 Point x2.
+     * @param y2 Point y2.
+     * @returns The distance between (x1,y1) and (x2,y2).
+     */
+    static double distance(double x1, double y1, double x2, double y2)
+    {
+	double result = 0;
+	//Take x2-x1, then square it
+	double part1 = Math.pow((x2 - x1), 2);
+	//Take y2-y1, then square it
+	double part2 = Math.pow((y2 - y1), 2);
+	//Add both of the parts together
+	double underRadical = part1 + part2;
+	//Get the square root of the parts
+	result = (double)Math.sqrt(underRadical);
+	//Return our result
+	return result;
     }
 }

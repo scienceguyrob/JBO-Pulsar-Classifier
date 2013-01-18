@@ -35,9 +35,9 @@
 		<mkdir dir="${test.report.dir}" />
 	</target>
 	
-	<!-- Compiles the java code (including the usage of library for JUnit -->
+	<!-- Compiles the java code (including the usage of library for JUnit (source="1.5" target="1.5")-->
 	<target name="compile" depends="clean, makedir">
-		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" source="1.5" target="1.5">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
 			<classpath refid="junit.class.path" />
 		</javac>
 	</target>
@@ -71,7 +71,7 @@
 
 	<!--Creates the deployable jar file  -->
 	<target name="jar" depends="compile" >
-		<jar destfile="${dist.dir}\JBOPulsarClassifierTool.jar" basedir="${build.dir}">
+		<jar destfile="${dist.dir}\JBOPulsarClassificationTool.jar" basedir="${build.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="JBOPulsarClassificationTool" />
 			</manifest>

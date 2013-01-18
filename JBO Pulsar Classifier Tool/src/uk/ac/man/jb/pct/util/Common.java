@@ -55,6 +55,29 @@ import uk.ac.man.jb.pct.io.Logging;
  */
 public class Common
 {
+    /**
+     * Calculates the distance between two points in the 2D co-ordinate plane.
+     * @param x1 Point x1.
+     * @param y1 Point y1.
+     * @param x2 Point x2.
+     * @param y2 Point y2.
+     * @returns The distance between (x1,y1) and (x2,y2).
+     */
+    public static double distance(double x1, double y1, double x2, double y2)
+    {
+	double result = 0;
+	//Take x2-x1, then square it
+	double part1 = Math.pow((x2 - x1), 2);
+	//Take y2-y1, then square it
+	double part2 = Math.pow((y2 - y1), 2);
+	//Add both of the parts together
+	double underRadical = part1 + part2;
+	//Get the square root of the parts
+	result = (double)Math.sqrt(underRadical);
+	//Return our result
+	return result;
+    }
+    
     //*****************************************
     //*****************************************
     //        Simple Object Methods
